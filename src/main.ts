@@ -7,7 +7,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
 
-  //Persona javi  = new Persona();
+  //Persona javi  = new Object();
 
   //stremas
   .setTitle('Products')
