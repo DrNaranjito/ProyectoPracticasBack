@@ -2,18 +2,16 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
-import { AuthModule } from './auth/auth.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 
 @Module({
   imports: [
-    // 1. Variables de entorno
+    // Conexión a la ruta de las claves en el fichero .env
     ConfigModule.forRoot({
       envFilePath: '.env',
-      isGlobal: true,
     }),
 
-    // 2. Conexión a la base de datos
+    // Conexión a base de datos
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -25,9 +23,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
       synchronize: true,
     }),
 
-    // 3. Módulos de tu aplicación
+    //Implementación de los modulos para la aplicación.
     UsuariosModule,
-    AuthModule,
   ],
 })
 export class AppModule {}

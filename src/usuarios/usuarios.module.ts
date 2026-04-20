@@ -10,5 +10,7 @@ import { Usuarios } from './usuarios.entidad';
   controllers: [ControladoresUsuarios],
   providers: [ServiciosUsuario],
   exports: [ServiciosUsuario],
+
+  //Implementación de los controladores del modulo de usuarios para que funione la aplicación
 })
 export class UsuariosModule {}

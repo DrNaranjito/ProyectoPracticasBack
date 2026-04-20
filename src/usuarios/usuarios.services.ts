@@ -17,7 +17,7 @@ export class ServiciosUsuario {
   */
 
 
-async crear(datosDTO: crearUsuariosDto) {
+    crear(datosDTO: crearUsuariosDto) {
     const usuario = this.repositorioUsuario.create(datosDTO);
     return this.repositorioUsuario.save(usuario);
   }
