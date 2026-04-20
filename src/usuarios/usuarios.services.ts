@@ -34,7 +34,7 @@ export class ServiciosUsuario {
   async buscarUno(id:number){
     const user = await this.repositorioUsuario.findOne({where:{id}})
     if (!user){
-       throw new NotFoundException //Si no se encuentra al usuario
+       throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
   }
   return user
 }
