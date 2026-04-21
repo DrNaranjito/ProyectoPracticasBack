@@ -1,5 +1,6 @@
-import { IsNumber, IsString } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn} from "typeorm"; 
+import { isNumber, IsNumber, IsString } from "class-validator";
+import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn, ManyToOne} from "typeorm"; 
+import { Breed } from "../../breed/entities/breed.entity";
 
 
 @Entity('Cats')
@@ -35,9 +36,17 @@ updatedAt! : Date;
 @DeleteDateColumn({type : 'timestamptz'})
 deletedAt! : Date;
 
-@IsString()
+
+@IsNumber()
 @Column()
-breed!:string
-//Columna para enlazarla
+breed! : number;
+//Funciona como una foreign key de la tabla de breeds
+
+@ManyToOne(() => Breed, (breed) => breed.id)
+breed_id! : number;
+
+//Función que dice que una raza la puede tener uno o muchos gatos.
+
+
 }
 
