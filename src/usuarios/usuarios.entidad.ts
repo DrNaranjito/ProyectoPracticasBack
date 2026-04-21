@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn} from "typeorm"; 
+import { IsString, MinLength } from "class-validator";
 
 //ESTE FICHERO ES LA TABLA DEL DIAGRAMA RELACIONAL DE LA BASE DE DATOS.
 
@@ -11,9 +12,12 @@ export class Usuarios{
     @Column()
     mail!: string;
 
+    @IsString()
     @Column()
     name!: string;
 
+    @IsString()
+    @MinLength(8)
     @Column()
     password!: string;
 
