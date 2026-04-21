@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { crearUsuariosDto } from './dto/crearUsuarios.dto'; 
 import { actualizarUsuariosDto } from './dto/actualizarUsuario.dto';
 import { Usuarios } from './usuarios.entidad';
+import { registerDto } from '../auth/dto/register.dto';
 
 @Injectable()
 export class ServiciosUsuario {
@@ -63,6 +64,25 @@ actualiza el objero con los datos nuevos y los guarda de nuevo en el usuario con
     const user = await this.buscarUno(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
     return this.repositorioUsuario.remove(user);
   }
+
+ crearDesdeAuth(dto: registerDto) {
+  const usuario = this.repositorioUsuario.create({
+    mail: dto.email,
+    name: dto.name,
+    password: dto.password,
+    role: 'registrado',
+    language: 'Español',
+  });
+/*
+He creado el metodo crearDesdeAuth ya que al intentar usar el metodo de crear usuarios no me ha dejado
+por que no eran los parametros validos asi que igualo los datos introducidos por el dto y le añadp
+los dos parametros que faltan en el dto de auth
+*/
+
+
+
+  return this.repositorioUsuario.save(usuario);
+}
 
 /*
 Metodo para elimnar un usuario mediante su id
