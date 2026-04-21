@@ -64,7 +64,9 @@ actualiza el objero con los datos nuevos y los guarda de nuevo en el usuario con
     const user = await this.buscarUno(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
     return this.repositorioUsuario.remove(user);
   }
+//----------------------------------------------------------------------------------
 
+//METODOS PARA AUTENTIFICAR
  crearDesdeAuth(dto: registerDto) {
   const usuario = this.repositorioUsuario.create({
     mail: dto.email,
@@ -79,9 +81,11 @@ por que no eran los parametros validos asi que igualo los datos introducidos por
 los dos parametros que faltan en el dto de auth
 */
 
-
-
   return this.repositorioUsuario.save(usuario);
+}
+
+async buscarPorEmail(email: string) {
+  return await this.repositorioUsuario.findOneBy({ mail: email });
 }
 
 /*

@@ -17,6 +17,5 @@ export class registerDto{
     @Transform(({value}) => value.trim()) 
     //Esta linea se esta encargando de que si hay espacios en blanco los elimine 
     //Se usa gracias a el paquete de class-transformer
-    
     password!:string;
 }
