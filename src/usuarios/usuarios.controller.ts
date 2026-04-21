@@ -48,7 +48,7 @@ por eso usamos un IntegerPrseInt(esto en java) pero ene ste caso vamos a usar un
     @Param('id', ParseIntPipe) id: number, 
     @Body() datosDTO: actualizarUsuariosDto
   ) {
-    return this.servicioUsuario.update(+id, datosDTO);
+    return this.servicioUsuario.update(id, datosDTO);
   }
 
 /*

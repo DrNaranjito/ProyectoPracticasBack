@@ -6,7 +6,7 @@ import { ServiciosUsuario } from './usuarios.services';
 import { Usuarios } from './usuarios.entidad';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Usuarios])],
+  imports: [TypeOrmModule.forFeature([Usuarios])], //Se especifica que entidad se va a usar en este módulo.
   controllers: [ControladoresUsuarios],
   providers: [ServiciosUsuario],
   exports: [ServiciosUsuario],

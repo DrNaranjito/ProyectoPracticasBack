@@ -60,7 +60,7 @@ actualiza el objero con los datos nuevos y los guarda de nuevo en el usuario con
 */
 
   async remove(id: number) {
-    const user = await this.buscarUno(id);
+    const user = await this.buscarUno(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
     return this.repositorioUsuario.remove(user);
   }
 
