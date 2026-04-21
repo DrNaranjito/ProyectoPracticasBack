@@ -3,13 +3,16 @@ import { ServiciosUsuario } from '../usuarios/usuarios.services';
 import { registerDto } from './dto/register.dto';
 
 import * as bcryptjs from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
+import { loginDto } from './dto/login.dto';
 
 
 @Injectable()
 export class AuthService {
 
     constructor(
-        private readonly ServiciosUsuario : ServiciosUsuario
+        private readonly ServiciosUsuario : ServiciosUsuario,
+        private readonly jwtService : JwtService //Implementamos el generador de tokens a la clase AuthServices
     ){} 
 
    async register({name, email, password}: registerDto) {
@@ -30,7 +33,7 @@ export class AuthService {
         });
     }
 
-    async login ({ email, password} : registerDto){
+    async login ({ email, password} : loginDto){
     const usuarioRegistrado = await this.ServiciosUsuario.buscarPorEmail(email)
 
     if(!usuarioRegistrado){
@@ -42,7 +45,12 @@ export class AuthService {
     if(!contraseñaValida){
         throw new UnauthorizedException('Contraseña invalida')
     }
-    return email;
+    const payload = {email:usuarioRegistrado.mail}
+    
+    const token = await this.jwtService.signAsync(payload)
+    
+    return {
+      token, email  
+    };
     }
-    //Controlación en la que si el email ya existe se prohibe volver a crear con el mismo usuario.
 }
