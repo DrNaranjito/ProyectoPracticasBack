@@ -52,5 +52,8 @@ export class AuthService {
     return {
       token, email  
     };
+
+    //TODO controlar los tokens se mejor manera. Esto tan solo es una prueba de creación de tokens
+    
     }
 }

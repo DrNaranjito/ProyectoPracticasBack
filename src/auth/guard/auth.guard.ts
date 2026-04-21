@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       // 💡 Here the JWT secret key that's used for verifying the payload 
       // is the key that was passed in the JwtModule
       const payload = await this.jwtService.verifyAsync(token,
-      {
+      { 
         secret: jwtConstants.secret
         //Si no coincide con lo guardado en jwt.constants bajo la constante secret se queda pillado aquí y lanza la excepción
       }
