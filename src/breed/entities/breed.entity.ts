@@ -1,28 +1,29 @@
-import { IsNumber, IsString } from "class-validator";
-import { CreateDateColumn, DeleteDateColumn, OneToMany, UpdateDateColumn } from "typeorm";
+
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Cat } from "../../cats/entities/cat.entity";
 
+@Entity('Breed')
 export class Breed {
 
-    @IsNumber()
+    @PrimaryGeneratedColumn()
     id!:number;
 
-    @IsString()
+    @Column()
     externalId!:string
 
-    @IsString()
+    @Column()
     name!:string
 
-    @IsString()
+    @Column()
     temperament!:string
 
-    @IsString()
+    @Column()
     origin!:string
 
-     @IsString()
+    @Column()
     description!:string
 
-    @IsString()
+    @Column()
     wikiUrl!:string
 
     @CreateDateColumn({type : 'timestamptz'})
@@ -34,6 +35,7 @@ export class Breed {
     @DeleteDateColumn({type : 'timestamptz'})
         deletedAt! : Date;
 
-    @OneToMany(() => Cat,(cat) => cat.id)
-    cat_id! : number;
+    @OneToMany(() => Cat,(cat) => cat.breed)
+    cats! : Cat[];
+    //En este caso como es la aprte N de la relación se tiene que guardar como un array
 }

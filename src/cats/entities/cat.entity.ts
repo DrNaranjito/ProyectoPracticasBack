@@ -7,23 +7,22 @@ import { Breed } from "../../breed/entities/breed.entity";
 export class Cat {
 
 @PrimaryGeneratedColumn()
-@IsNumber()
+
 id!:number
 
 @Column()
-@IsString()
 externalId!:string
 
-@IsString()
+
 @Column()
 url!:string
 
 
-@IsNumber()
+
 @Column()
 width!:number
 
-@IsNumber()
+
 @Column()
 height!:number
 
@@ -36,14 +35,10 @@ updatedAt! : Date;
 @DeleteDateColumn({type : 'timestamptz'})
 deletedAt! : Date;
 
-
-@IsNumber()
-@Column()
-breed! : number;
 //Funciona como una foreign key de la tabla de breeds
 
-@ManyToOne(() => Breed, (breed) => breed.id)
-breed_id! : number;
+  @ManyToOne(() => Breed, breed => breed.cats)
+  breed!: Breed; // ← RELACIÓN CORRECTA
 
 //Función que dice que una raza la puede tener uno o muchos gatos.
 

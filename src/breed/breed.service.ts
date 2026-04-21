@@ -10,40 +10,40 @@ export class BreedService {
 
   constructor(
 @InjectRepository(Breed)
-private readonly catRepository:Repository<Breed>
+private readonly breedRepository:Repository<Breed>
   
   ){ }
 
     create(datosDTO: CreateBreedDto) {
-    const usuario = this.catRepository.create(datosDTO);
-    return this.catRepository.save(usuario);
+    const raza = this.breedRepository.create(datosDTO);
+    return this.breedRepository.save(raza);
   }
 
   findAll(){
-    return this.catRepository.find(); //Es la misma sentencia en postgre solo que pasada a tsSELECT * FROM usuarios;
+    return this.breedRepository.find(); //Es la misma sentencia en postgre solo que pasada a tsSELECT * FROM usuarios;
   }
 
   async findOne(id:number){
-    const user = await this.catRepository.findOne({where:{id}})
-    if (!user){
+    const raza = await this.breedRepository.findOne({where:{id}})
+    if (!raza){
        throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
   }
-  return user
+  return raza
 }
 
 
   async update(id: number, dto: UpdateBreedDto) {
-    const user = await this.findOne(id);
+    const raza = await this.findOne(id);
 
-    const updated = Object.assign(user, dto);
+    const updated = Object.assign(raza, dto);
 
-    return this.catRepository.save(updated);
+    return this.breedRepository.save(updated);
 
     
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
-    return this.catRepository.remove(user);
+    const raza = await this.findOne(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
+    return this.breedRepository.remove(raza);
   }
 }

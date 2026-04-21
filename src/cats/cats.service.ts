@@ -15,8 +15,8 @@ private readonly catRepository:Repository<Cat>
   ){ }
 
     create(datosDTO: CreateCatDto) {
-    const usuario = this.catRepository.create(datosDTO);
-    return this.catRepository.save(usuario);
+    const gato = this.catRepository.create(datosDTO);
+    return this.catRepository.save(gato);
   }
 
   findAll(){
@@ -24,18 +24,18 @@ private readonly catRepository:Repository<Cat>
   }
 
   async findOne(id:number){
-    const user = await this.catRepository.findOne({where:{id}})
-    if (!user){
+    const gato = await this.catRepository.findOne({where:{id}})
+    if (!gato){
        throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
   }
-  return user
+  return gato
 }
 
 
   async update(id: number, dto: UpdateCatDto) {
-    const user = await this.findOne(id);
+    const gato = await this.findOne(id);
 
-    const updated = Object.assign(user, dto);
+    const updated = Object.assign(gato, dto);
 
     return this.catRepository.save(updated);
 
@@ -43,7 +43,7 @@ private readonly catRepository:Repository<Cat>
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
-    return this.catRepository.remove(user);
+    const gato = await this.findOne(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
+    return this.catRepository.remove(gato);
   }
 }

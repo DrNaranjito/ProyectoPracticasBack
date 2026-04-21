@@ -1,9 +1,6 @@
 import { IsNumber, IsString, } from "class-validator"
 
 export class CreateCatDto {
-    @IsNumber()
-    id!:number
-
     @IsString()
     externalId!:string
 
@@ -11,11 +8,11 @@ export class CreateCatDto {
     url!:string
 
      @IsNumber()
-    widht!:number
+    width!:number
 
      @IsNumber()
     height!:number
 
-    @IsString()
-    breed?:string
+    @IsNumber()
+    breedId!:number
 }

@@ -1,9 +1,6 @@
 import { IsNumber, IsString } from "class-validator";
 
 export class CreateBreedDto {
-    @IsNumber()
-    id!:number;
-
     @IsString()
     externalId!:string
 
