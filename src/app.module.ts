@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 import { UsuariosModule } from './usuarios/usuarios.module';
+import { CatsModule } from './cats/cats.module';
 
 @Module({
   imports: [
@@ -25,6 +26,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 
     //Implementación de los modulos para la aplicación.
     UsuariosModule,
+
+    CatsModule,
   ],
 })
 export class AppModule {}
