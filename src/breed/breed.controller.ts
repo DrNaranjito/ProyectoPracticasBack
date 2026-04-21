@@ -8,8 +8,8 @@ export class BreedController {
   constructor(private readonly breedService: BreedService) {}
 
   @Post()
-  create(@Body() createBreedDto: CreateBreedDto) {
-    return this.breedService.create(createBreedDto);
+  create(@Body() dto: CreateBreedDto) {
+    return this.breedService.create(dto);
     //Aquí va a haber que poner una condición de si no existe la raza se cree
   }
 
