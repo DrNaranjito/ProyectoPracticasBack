@@ -7,6 +7,7 @@ import { CatsModule } from './cats/cats.module';
 import { BreedModule } from './breed/breed.module';
 import { PetModule } from './pet/pet.module';
 import { AuthModule } from './auth/auth.module';
+import { VerificacionModule } from './verification/verificacion.module';
 
 @Module({
   imports: [
@@ -37,6 +38,8 @@ import { AuthModule } from './auth/auth.module';
     PetModule,
 
     AuthModule,
+    
+    VerificacionModule
 
 
   ],

@@ -11,7 +11,7 @@ async function bootstrap() {
   //Persona javi  = new Object();
 
   //stremas
-  .setTitle('Products')
+  .setTitle('Gatos')
   .setDescription('Esta es la descripcion')
   .setVersion('1.0')
   .addBearerAuth()
