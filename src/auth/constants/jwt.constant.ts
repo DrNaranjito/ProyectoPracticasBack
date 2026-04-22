@@ -1,4 +1,4 @@
 export const jwtConstants = {
-    secret: 'No utilizar esta palabra en producción'
-}
+    secret: process.env.JWT_SECRET
+};
 //Esto se tiene que guardar en la variable de .env

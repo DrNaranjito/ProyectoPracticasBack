@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { registerDto } from './dto/register.dto';
 import { loginDto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
 @Controller('auth')
@@ -28,12 +29,13 @@ export class AuthController {
         return this.authService.register(registerDto)
 
 }
-@Get('profile')
-@UseGuards(AuthGuard)
-    profile(@Request() req
-    ){
-        return req.user;
-    }
+
+ @ApiBearerAuth()
+ @UseGuards(AuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
 
     
 

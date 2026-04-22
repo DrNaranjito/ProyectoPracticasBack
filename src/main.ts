@@ -14,6 +14,7 @@ async function bootstrap() {
   .setTitle('Products')
   .setDescription('Esta es la descripcion')
   .setVersion('1.0')
+  .addBearerAuth()
   .build();  //.Collect(collectors.)
   
 

@@ -22,7 +22,7 @@ export class AuthService {
 
     const usuarioRegistrado = await this.ServiciosUsuario.buscarPorEmail(email)
 
-    if(!usuarioRegistrado){
+    if(usuarioRegistrado){
         throw new BadRequestException('Este email ya existe.')
     }
 

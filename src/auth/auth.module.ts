@@ -4,17 +4,27 @@ import { AuthService } from './auth.service';
 import { UsuariosModule } from '../usuarios/usuarios.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants/jwt.constant';
+import { ConfigModule } from '@nestjs/config';
+import { env } from 'process';
 
 @Module({
-  imports: [UsuariosModule,
-      JwtModule.register({
-      global: true, //Dice que cualqueir servicio puede usar JWT
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
-    }),
+
+
+  imports: 
+  
+  [ConfigModule.forRoot({
+    envFilePath: '.env',
+  }),
+
+    UsuariosModule,
+  JwtModule.register({
+    global: true, //Dice que cualqueir servicio puede usar JWT
+    secret: env.JWT_SECRET,
+    signOptions: { expiresIn: '1H' },
+  }),
   ],
   controllers: [AuthController],
   providers: [AuthService]
-  
+
 })
-export class AuthModule {}
+export class AuthModule { }
