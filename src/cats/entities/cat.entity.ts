@@ -1,46 +1,50 @@
-import { isNumber, IsNumber, IsString } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn, ManyToOne} from "typeorm"; 
+
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, OneToOne } from "typeorm";
 import { Breed } from "../../breed/entities/breed.entity";
+import { Pet } from "../../pet/entities/pet.entity";
 
 
 @Entity('Cats')
 export class Cat {
 
-@PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn()
 
-id!:number
+  id!: number
 
-@Column()
-externalId!:string
-
-
-@Column()
-url!:string
+  @Column()
+  externalId!: string
 
 
+  @Column()
+  url!: string
 
-@Column()
-width!:number
 
 
-@Column()
-height!:number
+  @Column()
+  width!: number
 
- @CreateDateColumn({type : 'timestamptz'})
-createdAt! : Date;
 
-@UpdateDateColumn({type : 'timestamptz'})
-updatedAt! : Date;
+  @Column()
+  height!: number
 
-@DeleteDateColumn({type : 'timestamptz'})
-deletedAt! : Date;
+  @CreateDateColumn({ type: 'timestamptz' })
+  createdAt!: Date;
 
-//Funciona como una foreign key de la tabla de breeds
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt!: Date;
+
+  @DeleteDateColumn({ type: 'timestamptz' })
+  deletedAt!: Date;
+
+  //Funciona como una foreign key de la tabla de breeds
 
   @ManyToOne(() => Breed, breed => breed.cats)
   breed!: Breed; // ← RELACIÓN CORRECTA
 
-//Función que dice que una raza la puede tener uno o muchos gatos.
+@OneToOne(() => Pet, pet => pet.cat)
+pet!: Pet;
+
+  //Función que dice que una raza la puede tener uno o muchos gatos.
 
 
 }

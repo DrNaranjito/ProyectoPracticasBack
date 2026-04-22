@@ -6,7 +6,6 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { CatsModule } from './cats/cats.module';
 import { BreedModule } from './breed/breed.module';
 import { PetModule } from './pet/pet.module';
-import { HolaModule } from './hola/hola.module';
 
 @Module({
   imports: [
@@ -36,7 +35,7 @@ import { HolaModule } from './hola/hola.module';
 
     PetModule,
 
-    HolaModule,
+
   ],
 })
-export class AppModule {}
+export class AppModule { }
