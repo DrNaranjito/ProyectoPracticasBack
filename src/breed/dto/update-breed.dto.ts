@@ -5,11 +5,11 @@ import { IsString } from 'class-validator';
 export class UpdateBreedDto extends PartialType(CreateBreedDto) {
 
     @IsString()
-    name!:string
+    name?:string
 
     @IsString()
-    temperament!:string
+    temperament?:string
          
     @IsString()
-    description!:string
+    description?:string
 }
