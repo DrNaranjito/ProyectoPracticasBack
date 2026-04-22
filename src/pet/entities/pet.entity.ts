@@ -23,6 +23,5 @@ export class Pet {
   user!: Usuarios;
 
   @OneToOne(() => Cat, cat => cat.pet)
-  @JoinColumn()
   cat!: Cat;
 }
