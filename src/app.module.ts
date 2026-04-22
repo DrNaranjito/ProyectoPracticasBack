@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { CatsModule } from './cats/cats.module';
 import { BreedModule } from './breed/breed.module';
+import { PetModule } from './pet/pet.module';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { BreedModule } from './breed/breed.module';
     CatsModule,
 
     BreedModule,
+
+    PetModule,
   ],
 })
 export class AppModule {}
