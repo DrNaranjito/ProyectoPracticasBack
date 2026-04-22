@@ -6,6 +6,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { CatsModule } from './cats/cats.module';
 import { BreedModule } from './breed/breed.module';
 import { PetModule } from './pet/pet.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,6 +35,8 @@ import { PetModule } from './pet/pet.module';
     BreedModule,
 
     PetModule,
+
+    AuthModule,
 
 
   ],

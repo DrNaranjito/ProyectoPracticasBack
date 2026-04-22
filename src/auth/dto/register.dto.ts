@@ -5,7 +5,6 @@ import { IsEmail, IsString, MinLength } from "class-validator";
 export class registerDto{
 
     @IsString()
-    @MinLength(10)
     @Transform(({value}) => value.trim()) 
     name!:string;
 

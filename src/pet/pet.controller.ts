@@ -1,25 +1,25 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PetService } from './pet.service';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
+import { ServiciosPet } from './pet.service';
 
 @Controller('pet')
 export class PetController {
-  constructor(private readonly petService: PetService) {}
+  constructor(private readonly petService: ServiciosPet) {}
 
   @Post()
   create(@Body() createPetDto: CreatePetDto) {
-    return this.petService.create(createPetDto);
+    return this.petService.crear(createPetDto);
   }
 
   @Get()
   findAll() {
-    return this.petService.findAll();
+    return this.petService.todos();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.petService.findOne(+id);
+    return this.petService.buscarUno(+id);
   }
 
   @Patch(':id')
