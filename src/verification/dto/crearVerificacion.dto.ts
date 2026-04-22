@@ -1,4 +1,4 @@
-export class verificacionDTO{
+export class crearVerificacionDTO{
     tagerEmail! : string;
     name! : string;
     password! : string;

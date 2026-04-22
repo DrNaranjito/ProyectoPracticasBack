@@ -12,7 +12,7 @@ export class Vereficacion{
     targetEmail!: string;
 
     @Column()
-    verificationToken!: string;
+    verificationToken!: boolean;
 
     @Column()
     name!: string;
