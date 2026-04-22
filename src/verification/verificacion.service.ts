@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Vereficacion } from './verificacion.entidad';
-import { actualizarVerificacionDTO } from './dto/actualizarVerificacion.dto';
+import { Verificacion } from './verificacion.entidad';
+import { ActualizarVerificacionDto } from './dto/actualizarVerificacion.dto';
 import { crearVerificacionDTO } from './dto/crearVerificacion.dto';
 
 
@@ -10,8 +10,8 @@ import { crearVerificacionDTO } from './dto/crearVerificacion.dto';
 @Injectable()
 export class ServiciosVerificacion {
   constructor(
-    @InjectRepository(Vereficacion)
-    private readonly repositorioVerificacion: Repository<Vereficacion>,
+    @InjectRepository(Verificacion)
+    private readonly repositorioVerificacion: Repository<Verificacion>,
   ) { }
   /*Inyectamos lo necesario para poder usar las herramientas que nos
   van a permitir guardar, borrar y modificar los usuarios de la base de datos.
@@ -45,7 +45,7 @@ export class ServiciosVerificacion {
   Si no hay ningun usuario con ese id se lanzará una excepción de que no se ha encontrado.
   */
 
-  async update(id: number, dto: actualizarVerificacionDTO) {
+  async update(id: number, dto: ActualizarVerificacionDto) {
     const user = await this.buscarUno(id);
 
     const updated = Object.assign(user, dto);

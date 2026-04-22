@@ -1,6 +1,9 @@
+import { IsEmail, IsString } from "class-validator";
+
 export class crearVerificacionDTO{
-    tagerEmail! : string;
-    name! : string;
-    password! : string;
-    language! : 'Español' | 'Inglés';
+  @IsString()
+  verificationToken!: string;
+
+  @IsEmail()
+  targetEmail!: string;
 }

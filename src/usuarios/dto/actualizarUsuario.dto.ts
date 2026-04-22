@@ -8,7 +8,7 @@ export class actualizarUsuariosDto{
     @IsString()
     password? :  string;
     @IsString()
-    role? : 'registrado' | 'sinRegistrar';
+    role? : 'validado' | 'sinValidar';
     @IsString()
     language? : 'Español' | 'Inglés';
 }

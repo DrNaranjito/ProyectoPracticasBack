@@ -22,14 +22,14 @@ export class Usuarios {
 
     @Column({
         type: 'enum', // Marcamos esta columna para que tenga 3 tipos de posibles respuestas 
-        enum: ['registrado', 'sinRegistrar', 'Admin'], //Enumeramos las 3 posibles respuestas
-        default: 'sinRegistrar' // Y por ultimo asignamos un valor por defecto
+        enum: ['validado', 'sinValidar', 'Admin'], //Enumeramos las 3 posibles respuestas
+        default: 'sinValidar' // Y por ultimo asignamos un valor por defecto
 
         /*Se hace de esta manera ya que si fuese por typescript con ponerlo separado por barrar valdría
         *Pero para que la base de datos reconozca que solo se pueden esos x valores hay que señalar que es 
         *de ese tipo*/
     })
-    role!: 'registrado' | 'sinRegistrar' | 'Admin';
+    role!: 'validado' | 'sinValidar' | 'Admin';
 
     @Column({
         type: 'enum',

@@ -72,7 +72,7 @@ export class ServiciosUsuario {
       mail: dto.email,
       name: dto.name,
       password: dto.password,
-      role: 'registrado',
+      role: 'sinValidar',
       language: 'Español',
     });
     /*

@@ -1,6 +1,14 @@
-import { IsBoolean } from "class-validator";
+import { IsEmail, IsOptional, IsString } from "class-validator";
 
-export class actualizarVerificacionDTO{
-    @IsBoolean()
-    verificationToken?: boolean;
+export class ActualizarVerificacionDto {
+  @IsOptional()
+  @IsString()
+  verificationToken?: string;
+
+  @IsOptional()
+  @IsEmail()
+  targetEmail?: string;
+
+  @IsOptional()
+  acceptedAt?: Date;
 }

@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from 
 import { ApiTags } from "@nestjs/swagger";
 import { ServiciosVerificacion } from "./verificacion.service";
 import { crearVerificacionDTO } from "./dto/crearVerificacion.dto";
-import { actualizarVerificacionDTO } from "./dto/actualizarVerificacion.dto";
+import { ActualizarVerificacionDto } from "./dto/actualizarVerificacion.dto";
 
 @ApiTags('Verificacion') // Con esta linea estamos declarando que en nuestro Swagger se va a ver la documentación relacionada con los usuarios como "Users"
 @Controller('Verificacion')
@@ -44,7 +44,7 @@ por eso usamos un IntegerPrseInt(esto en java) pero ene ste caso vamos a usar un
   @Patch(':id')
   actualizar(
     @Param('id', ParseIntPipe) id: number, 
-    @Body() datosDTO: actualizarVerificacionDTO
+    @Body() datosDTO: ActualizarVerificacionDto
   ) {
     return this.vericicacionServicios.update(id, datosDTO);
   }

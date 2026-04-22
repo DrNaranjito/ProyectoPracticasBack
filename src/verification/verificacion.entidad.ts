@@ -1,45 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn} from "typeorm"; 
+import {
+    Entity, PrimaryGeneratedColumn, Column, CreateDateColumn ,UpdateDateColumn, DeleteDateColumn,
+} from 'typeorm';
 
-//ESTE FICHERO ES LA TABLA DEL DIAGRAMA RELACIONAL DE LA BASE DE DATOS.
+@Entity('Verificacion')
+export class Verificacion {
+    @PrimaryGeneratedColumn()
+    id!: number;
 
-@Entity('Verificacion') //Nombre de la tabla
-export class Vereficacion{
+    @Column()
+    verificationToken!: string;
 
-    @PrimaryGeneratedColumn() //Indicamos que va a ser la PrimaryKey de la tabla
-    id!:number // La exclamación nos ahorra el tener que inicializar el dato ya que es una variable a la que se le va a asignar el dato más adelante
-     //El id es como un serial
     @Column()
     targetEmail!: string;
 
-    @Column()
-    verificationToken!: boolean;
+    @Column({ type: 'timestamptz', nullable: true })
+    acceptedAt!: Date | null;
 
-    @Column()
-    name!: string;
+    @CreateDateColumn({ type: 'timestamptz' })
+    createdAt!: Date;
 
-    @Column()
-    password!: string;
+    @UpdateDateColumn({ type: 'timestamptz' })
+    updatedAt!: Date;
 
-    @Column({
-        type: 'enum',
-        enum : ['Español', 'Inglés'],
-        default : 'Español',
-    })
-    language! : 'Español' | 'Inglés';
-
-    @CreateDateColumn({type : 'timestamptz'})
-    acceptedAt! : Date;
-
-    @CreateDateColumn({type : 'timestamptz'})
-    createdAt! : Date;
-
-    @UpdateDateColumn({type : 'timestamptz'})
-    updatedAt! : Date;
-
-    @DeleteDateColumn({type : 'timestamptz'})
-    deletedAt! : Date;
-
-    //En estas 3 ultimas filas he usado el tipo *timestamptz* ya que proporciona la fecha con zona horaria.
-
-
+    @DeleteDateColumn({ type: 'timestamptz' })
+    deletedAt!: Date;
 }

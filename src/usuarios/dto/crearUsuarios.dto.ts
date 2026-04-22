@@ -2,17 +2,16 @@ import { IsOptional, IsString } from "class-validator";
 
 export class crearUsuariosDto{
     @IsString()
-    mail! : string;
+    name! : string;
     @IsString()
-    name! : string
+    mail! : string
     @IsString()
     password! :  string;
-    @IsOptional()
     @IsString()
-    role! : 'registrado' | 'sinRegistrar' | 'Admin';
     @IsOptional()
+    role! : 'validado' | 'sinValidar' | 'Admin';
     @IsString()
+    @IsOptional()
     language! : 'Español' | 'Inglés';
 }
 
-//Con esta clase me aseguro de que el usuario
