@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn, OneToMany} from "typeorm"; 
+import { Entity, PrimaryGeneratedColumn, Column , CreateDateColumn,UpdateDateColumn,DeleteDateColumn} from "typeorm"; 
 import { IsString, MinLength } from "class-validator";
-import { Pet } from "../pet/entities/pet.entity";
 
 //ESTE FICHERO ES LA TABLA DEL DIAGRAMA RELACIONAL DE LA BASE DE DATOS.
 
@@ -51,7 +50,5 @@ export class Usuarios{
 
     //En estas 3 ultimas filas he usado el tipo *timestamptz* ya que proporciona la fecha con zona horaria.
 
-    @OneToMany(() => Pet,(pet) => pet.usuarios)
-    Pet! : Pet[];
 
 }
