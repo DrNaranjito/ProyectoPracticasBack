@@ -1,4 +1,4 @@
-import { ApiTags } from "@nestjs/swagger"; //Importación de Swagger para que salga como tag Users para más control
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger"; //Importación de Swagger para que salga como tag Users para más control
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post} from "@nestjs/common";
 import { actualizarUsuariosDto } from "./dto/actualizarUsuario.dto";
 import { crearUsuariosDto } from "./dto/crearUsuarios.dto";
@@ -30,7 +30,7 @@ los datos generados por el JSON de el DTO
 /*
 Decorador GET para que devuelva todos los usuarios creados.
 */
-
+  @ApiBearerAuth()
   @Get(':id')
   buscarUno(@Param('id', ParseIntPipe) id: number) {
     return this.servicioUsuario.buscarUno(id);
