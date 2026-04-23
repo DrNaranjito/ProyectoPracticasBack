@@ -1,42 +1,45 @@
-import { Body, Controller, Post, Get, UseGuards,Request} from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { registerDto } from './dto/register.dto';
 import { loginDto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { RolesGuard } from './guard/roles.guard';
+import { Roles } from './Decorator/roles.decorator';
+import { Role } from './Decorator/role.enum';
+
 
 
 @Controller('auth')
 export class AuthController {
 
     constructor(
-    private readonly authService : AuthService,
-    ) {}
+        private readonly authService: AuthService,
+    ) { }
 
     @Post('login')
     login(
         @Body()
-        loginDto :  loginDto
-    ){
+        loginDto: loginDto
+    ) {
         return this.authService.login(loginDto)
-}
+    }
 
     @Post('register')
     register(
         @Body()
-        registerDto :  registerDto
-    ){
+        registerDto: registerDto
+    ) {
         return this.authService.register(registerDto)
 
-}
+    }
 
- @ApiBearerAuth()
- @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard,RolesGuard)
+    @Get('profile')
+    getProfile(@Request() req) {
+        return this.authService.getProfile(req.user);
+    }
 
-    
+
 
 }

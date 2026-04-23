@@ -7,9 +7,13 @@ import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login.dto';
 
 
+
+
 @Injectable()
 export class AuthService {
 
+
+    
     constructor(
         private readonly ServiciosUsuario : ServiciosUsuario,
         private readonly jwtService : JwtService //Implementamos el generador de tokens a la clase AuthServices
@@ -45,7 +49,7 @@ export class AuthService {
     if(!contraseñaValida){
         throw new UnauthorizedException('Contraseña invalida')
     }
-    const payload = {email:usuarioRegistrado.mail}
+    const payload = {email:usuarioRegistrado.mail, role: usuarioRegistrado.role} //Se le mete el rol para que el token sepa que rol es.
     
     const token = await this.jwtService.signAsync(payload)
     
@@ -56,4 +60,19 @@ export class AuthService {
     //TODO controlar los tokens se mejor manera. Esto tan solo es una prueba de creación de tokens
     
     }
+
+async getProfile({email,role}:{email:string,role:string}){
+
+/*    if(role != 'Admin'){
+
+        throw new UnauthorizedException(
+            'No tienes los permisos suficientes para realizar esta ac'
+        )
+    }
+
+    */
+    return  await this.ServiciosUsuario.buscarPorEmail(email)
+
+}
+
 }
