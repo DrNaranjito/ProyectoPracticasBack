@@ -18,13 +18,13 @@ export class PetController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.petService.buscarUno(+id);
+  findOne(@Param('id') id: number) {
+    return this.petService.buscarUno(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePetDto: UpdatePetDto) {
-    return this.petService.update(+id, updatePetDto);
+  update(@Param('id') id: number, @Body() updatePetDto: UpdatePetDto) {
+    return this.petService.update(id, updatePetDto);
   }
 
   @Delete(':id')
