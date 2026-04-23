@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { ServiciosUsuario } from '../usuarios/usuarios.services';
 import { registerDto } from './dto/register.dto';
 
@@ -61,18 +61,14 @@ export class AuthService {
 
     }
 
-    async getProfile({ email, role }: { email: string, role: string }) {
+async getProfile(user: { email: string; rol: string }) {
+  const usuario = await this.ServiciosUsuario.buscarPorEmail(user.email);
 
-        /*    if(role != 'Admin'){
-        
-                throw new UnauthorizedException(
-                    'No tienes los permisos suficientes para realizar esta ac'
-                )
-            }
-        
-            */
-        return await this.ServiciosUsuario.buscarPorEmail(email)
+  if (!usuario) {
+    throw new NotFoundException('Usuario no encontrado');
+  }
 
-    }
+  return usuario;
+}
 
 }

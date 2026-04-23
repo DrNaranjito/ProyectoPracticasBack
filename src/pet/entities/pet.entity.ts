@@ -23,5 +23,6 @@ export class Pet {
   user!: Usuarios;
 
   @OneToOne(() => Cat, cat => cat.pet)
+  @JoinColumn()//Indicamos que pet es la FK que va hacia Cat
   cat!: Cat;
 }
