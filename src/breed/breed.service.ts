@@ -9,27 +9,27 @@ import { Repository } from 'typeorm';
 export class BreedService {
 
   constructor(
-@InjectRepository(Breed)
-private readonly breedRepository:Repository<Breed>
-  
-  ){ }
+    @InjectRepository(Breed)
+    private readonly breedRepository: Repository<Breed>
 
-    create(datosDTO: CreateBreedDto) {
+  ) { }
+
+  create(datosDTO: CreateBreedDto) {
     const raza = this.breedRepository.create(datosDTO);
     return this.breedRepository.save(raza);
   }
 
-  findAll(){
+  findAll() {
     return this.breedRepository.find(); //Es la misma sentencia en postgre solo que pasada a tsSELECT * FROM usuarios;
   }
 
-  async findOne(id:number){
-    const raza = await this.breedRepository.findOne({where:{id}})
-    if (!raza){
-       throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
+  async findOne(id: number) {
+    const raza = await this.breedRepository.findOne({ where: { id } })
+    if (!raza) {
+      throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
+    }
+    return raza
   }
-  return raza
-}
 
 
   async update(id: number, dto: UpdateBreedDto) {
@@ -39,7 +39,7 @@ private readonly breedRepository:Repository<Breed>
 
     return this.breedRepository.save(updated);
 
-    
+
   }
 
   async remove(id: number) {

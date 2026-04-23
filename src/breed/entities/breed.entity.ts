@@ -6,36 +6,36 @@ import { Cat } from "../../cats/entities/cat.entity";
 export class Breed {
 
     @PrimaryGeneratedColumn()
-    id!:number;
+    id!: number;
 
     @Column()
-    externalId!:string
+    externalId!: string
 
     @Column()
-    name!:string
+    name!: string
 
     @Column()
-    temperament!:string
+    temperament!: string
 
     @Column()
-    origin!:string
+    origin!: string
 
     @Column()
-    description!:string
+    description!: string
 
     @Column()
-    wikiUrl!:string
+    wikiUrl!: string
 
-    @CreateDateColumn({type : 'timestamptz'})
-        createdAt! : Date;
-    
-    @UpdateDateColumn({type : 'timestamptz'})
-        updatedAt! : Date;
-    
-    @DeleteDateColumn({type : 'timestamptz'})
-        deletedAt! : Date;
+    @CreateDateColumn({ type: 'timestamptz' })
+    createdAt!: Date;
 
-    @OneToMany(() => Cat,(cat) => cat.breed)
-    cats! : Cat[];
+    @UpdateDateColumn({ type: 'timestamptz' })
+    updatedAt!: Date;
+
+    @DeleteDateColumn({ type: 'timestamptz' })
+    deletedAt!: Date;
+
+    @OneToMany(() => Cat, (cat) => cat.breed)
+    cats!: Cat[];
     //En este caso como es la aprte N de la relación se tiene que guardar como un array
 }

@@ -10,21 +10,21 @@ import { RolesGuard } from './guard/roles.guard';
 @Module({
 
 
-  imports: 
-  
-  [ConfigModule.forRoot({
-    envFilePath: '.env',
-  }),
+  imports:
 
-    UsuariosModule,
-  JwtModule.register({
-    global: true, //Dice que cualqueir servicio puede usar JWT
-    secret: env.JWT_SECRET,
-    signOptions: { expiresIn: '1H' },
-  }),
-  ],
+    [ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
+
+      UsuariosModule,
+    JwtModule.register({
+      global: true, //Dice que cualqueir servicio puede usar JWT
+      secret: env.JWT_SECRET,
+      signOptions: { expiresIn: '1H' },
+    }),
+    ],
   controllers: [AuthController],
-  providers: [AuthService,RolesGuard]
+  providers: [AuthService, RolesGuard]
 
 })
 export class AuthModule { }

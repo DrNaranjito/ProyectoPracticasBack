@@ -13,4 +13,4 @@ import { Usuarios } from './usuarios.entidad';
 
   //Implementación de los controladores del modulo de usuarios para que funione la aplicación
 })
-export class UsuariosModule {}
+export class UsuariosModule { }

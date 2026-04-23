@@ -1,17 +1,21 @@
 import { IsOptional, IsString } from "class-validator";
 
-export class crearUsuariosDto{
+export class crearUsuariosDto {
     @IsString()
-    name! : string;
+    name!: string;
+
     @IsString()
-    mail! : string
+    mail!: string;
+
     @IsString()
-    password! :  string;
+    password!: string;
+
     @IsString()
     @IsOptional()
-    role! : 'validado' | 'sinValidar' | 'Admin';
+    role!: 'validado' | 'sinValidar' | 'Admin';
+
     @IsString()
     @IsOptional()
-    language! : 'Español' | 'Inglés';
+    language!: 'Español' | 'Inglés';
 }
 

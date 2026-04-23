@@ -14,4 +14,4 @@ import { ServiciosVerificacion } from './verificacion.service';
 
   //Implementación de los controladores del modulo de usuarios para que funione la aplicación
 })
-export class VerificacionModule {}
+export class VerificacionModule { }

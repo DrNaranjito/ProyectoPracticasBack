@@ -34,8 +34,8 @@ export class AuthController {
 
     }
 
-    @Roles(Role.Admin)
-    @UseGuards(AuthGuard,RolesGuard)
+    
+    @UseGuards(AuthGuard)
     @Get('profile')
     getProfile(@Request() req) {
         return this.authService.getProfile(req.user);

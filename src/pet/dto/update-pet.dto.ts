@@ -4,6 +4,6 @@ import { IsString } from 'class-validator';
 
 export class UpdatePetDto extends PartialType(CreatePetDto) {
 
-@IsString()
+  @IsString()
   name?: string;
 }

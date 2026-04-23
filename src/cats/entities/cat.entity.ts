@@ -8,21 +8,16 @@ import { Pet } from "../../pet/entities/pet.entity";
 export class Cat {
 
   @PrimaryGeneratedColumn()
-
   id!: number
 
   @Column()
   externalId!: string
 
-
   @Column()
   url!: string
 
-
-
   @Column()
   width!: number
-
 
   @Column()
   height!: number

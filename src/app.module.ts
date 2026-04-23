@@ -38,7 +38,7 @@ import { VerificacionModule } from './verification/verificacion.module';
     PetModule,
 
     AuthModule,
-    
+
     VerificacionModule
 
 

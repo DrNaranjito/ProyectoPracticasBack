@@ -1,26 +1,21 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 export class CreateBreedDto {
     @IsString()
-    externalId!:string
+    externalId!: string
 
     @IsString()
-    name!:string
+    name!: string
 
     @IsString()
-    temperament!:string
+    temperament!: string
 
     @IsString()
-    origin!:string
-
-     @IsString()
-    description!:string
+    origin!: string
 
     @IsString()
-    wikiUrl!:string
+    description!: string
 
-
-
-
-
+    @IsString()
+    wikiUrl!: string
 }

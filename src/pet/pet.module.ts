@@ -10,4 +10,4 @@ import { Pet } from './entities/pet.entity';
   providers: [ServiciosPet],
   exports: [ServiciosPet],
 })
-export class PetModule {}
+export class PetModule { }

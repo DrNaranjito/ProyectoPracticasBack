@@ -5,7 +5,7 @@ import { UpdateBreedDto } from './dto/update-breed.dto';
 
 @Controller('breed')
 export class BreedController {
-  constructor(private readonly breedService: BreedService) {}
+  constructor(private readonly breedService: BreedService) { }
 
   @Post()
   create(@Body() dto: CreateBreedDto) {

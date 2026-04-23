@@ -77,7 +77,7 @@ export class ServiciosUsuario {
     });
     /*
     He creado el metodo crearDesdeAuth ya que al intentar usar el metodo de crear usuarios no me ha dejado
-    por que no eran los parametros validos asi que igualo los datos introducidos por el dto y le añadp
+    por que no eran los parametros validos asi que igualo los datos introducidos por el dto y le añado
     los dos parametros que faltan en el dto de auth
     */
 
