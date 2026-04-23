@@ -5,6 +5,7 @@ import { loginDto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
 import { RolesGuard } from './guard/roles.guard';
 import { Roles } from './Decorator/roles.decorator';
+import { Admin } from 'typeorm';
 import { Role } from './Decorator/role.enum';
 
 

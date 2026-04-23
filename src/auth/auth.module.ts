@@ -5,6 +5,7 @@ import { UsuariosModule } from '../usuarios/usuarios.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { env } from 'process';
+import { RolesGuard } from './guard/roles.guard';
 
 @Module({
 
@@ -23,7 +24,7 @@ import { env } from 'process';
   }),
   ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService,RolesGuard]
 
 })
 export class AuthModule { }

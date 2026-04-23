@@ -19,14 +19,14 @@ export class ServiciosUsuario {
 
 
   crear(datosDTO: crearUsuariosDto) {
-    const usuario = this.repositorioUsuario.create(datosDTO);
+    const usuario = this.repositorioUsuario.create(datosDTO); //CREATE.TABLE
     return this.repositorioUsuario.save(usuario);
   }
   /*Creación de usuarios recogiendo los datos de la clase crearUsuarios.dto */
 
   todos() {
     return this.repositorioUsuario.find(); //Es la misma sentencia en postgre solo que pasada a tsSELECT * FROM usuarios;
-  }
+  }//SELECT FROM
 
   /*
   Metodo para que se desplieguen todos los usuarios.

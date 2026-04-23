@@ -1,6 +1,8 @@
 import {
-    Entity, PrimaryGeneratedColumn, Column, CreateDateColumn ,UpdateDateColumn, DeleteDateColumn,
+    Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn,
+    ManyToOne,
 } from 'typeorm';
+import { Usuarios } from '../usuarios/usuarios.entidad';
 
 @Entity('Verificacion')
 export class Verificacion {
@@ -24,4 +26,7 @@ export class Verificacion {
 
     @DeleteDateColumn({ type: 'timestamptz' })
     deletedAt!: Date;
+
+    @ManyToOne(() => Usuarios, (user) => user.verificar)
+    user!: Usuarios;
 }

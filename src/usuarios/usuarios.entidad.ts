@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from "typeorm";
 import { Pet } from "../pet/entities/pet.entity";
+import { Verificacion } from "../verification/verificacion.entidad";
 
 //ESTE FICHERO ES LA TABLA DEL DIAGRAMA RELACIONAL DE LA BASE DE DATOS.
 
@@ -47,9 +48,10 @@ export class Usuarios {
     @DeleteDateColumn({ type: 'timestamptz' })
     deletedAt!: Date;
 
-@OneToMany(() => Pet, pet => pet.user)
-pets!: Pet[];
+    @OneToMany(() => Pet, pet => pet.user)
+    pets!: Pet[];
     //En estas 3 ultimas filas he usado el tipo *timestamptz* ya que proporciona la fecha con zona horaria.
 
-
+    @OneToMany(() => Verificacion, (verificacion) => verificacion.user)
+    verificar!: Verificacion[];
 }
