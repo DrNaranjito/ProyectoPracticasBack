@@ -1,10 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pet } from './entities/pet.entity';
 import { Repository } from 'typeorm';
-import { Cat } from '../cats/entities/cat.entity';
 
 @Injectable()
 export class ServiciosPet {
@@ -12,7 +11,6 @@ export class ServiciosPet {
   constructor(
     @InjectRepository(Pet)
     private readonly repositorioPet: Repository<Pet>,
-    private readonly catRepository: Repository<Cat>
   ) { }
   /*Inyectamos lo necesario para poder usar las herramientas que nos
   van a permitir guardar, borrar y modificar los usuarios de la base de datos.
@@ -65,27 +63,4 @@ export class ServiciosPet {
     const pet = await this.buscarUno(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
     return this.repositorioPet.remove(pet);
   }
-
-async adoptar(dto: CreatePetDto, userId: number) {
-  const cat = await this.catRepository.findOne({
-    where: { id: dto.catId },
-    relations: ['pet'],
-  });
-
-  if (!cat) {
-    throw new NotFoundException('El gato no existe');
-  }
-
-  if (cat.pet) {
-    throw new BadRequestException('Este gato ya está adoptado');
-  }
-
-  const pet = this.repositorioPet.create({
-    name: dto.name,
-    user: { id: userId },
-    cat: { id: dto.catId },
-  });
-
-  return this.repositorioPet.save(pet);
-}
 }

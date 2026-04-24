@@ -39,7 +39,7 @@ import { VerificacionModule } from './verification/verificacion.module';
 
     AuthModule,
 
-    VerificacionModule
+    VerificacionModule,
 
 
   ],
