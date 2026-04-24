@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
 import { ServiciosPet } from './pet.service';
@@ -30,5 +30,10 @@ export class PetController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.petService.remove(+id);
+  }
+
+  @Post()
+  adoptar(@Body() dto: CreatePetDto, @Req() req) {
+    return this.petService.adoptar(dto, req.user.sub);
   }
 }
