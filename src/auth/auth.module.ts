@@ -6,6 +6,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { env } from 'process';
 import { RolesGuard } from './guard/roles.guard';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Usuarios } from '../usuarios/usuarios.entidad';
+import { Verificacion } from '../verification/verificacion.entidad';
 
 @Module({
 
@@ -22,6 +25,8 @@ import { RolesGuard } from './guard/roles.guard';
       secret: env.JWT_SECRET,
       signOptions: { expiresIn: '1H' },
     }),
+    
+     TypeOrmModule.forFeature([Usuarios, Verificacion])
     ],
   controllers: [AuthController],
   providers: [AuthService, RolesGuard]

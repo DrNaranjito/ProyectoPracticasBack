@@ -5,6 +5,8 @@ import { registerDto } from './dto/register.dto';
 import * as bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login.dto';
+import { Repository } from 'typeorm';
+import { Verificacion } from '../verification/verificacion.entidad';
 
 
 
@@ -16,25 +18,38 @@ export class AuthService {
 
     constructor(
         private readonly ServiciosUsuario: ServiciosUsuario,
-        private readonly jwtService: JwtService //Implementamos el generador de tokens a la clase AuthServices
+        private readonly jwtService: JwtService, //Implementamos el generador de tokens a la clase AuthServices
+         private readonly verificacionRepository: Repository<Verificacion>
     ) { }
 
     async register({ name, email, password }: registerDto) {
 
-        //Desglosamos los datosDTO previos para poder usar el email en forma de string para
-        //poder usarlo como parametro en nuestro metodo para no repetir emails.
-
-        const usuarioRegistrado = await this.ServiciosUsuario.buscarPorEmail(email)
+        const usuarioRegistrado = await this.ServiciosUsuario.buscarPorEmail(email);
 
         if (usuarioRegistrado) {
-            throw new BadRequestException('Este email ya existe.')
+            throw new BadRequestException('Este email ya existe.');
         }
 
-        return await this.ServiciosUsuario.crearDesdeAuth({
+        const user = await this.ServiciosUsuario.crearDesdeAuth({
             name,
             email,
-            password: await bcryptjs.hash(password, 10) //Con esta sentencia estamos encriptando la contraseña.
+            password: await bcryptjs.hash(password, 10),
         });
+
+        const verificationToken = crypto.randomUUID();
+
+        const verificacion = this.verificacionRepository.create({
+            targetEmail: user.mail,
+            verificationToken,
+            createdAt: new Date(),
+            user: user
+        });
+
+        await this.verificacionRepository.save(verificacion);
+
+        return {
+            message: 'Usuario registrado. Pendiente de aprobación por un administrador.'
+        };
     }
 
     async login({ email, password }: loginDto) {
@@ -61,14 +76,14 @@ export class AuthService {
 
     }
 
-async getProfile(user: { email: string; rol: string }) {
-  const usuario = await this.ServiciosUsuario.buscarPorEmail(user.email);
+    async getProfile(user: { email: string; rol: string }) {
+        const usuario = await this.ServiciosUsuario.buscarPorEmail(user.email);
 
-  if (!usuario) {
-    throw new NotFoundException('Usuario no encontrado');
-  }
+        if (!usuario) {
+            throw new NotFoundException('Usuario no encontrado');
+        }
 
-  return usuario;
-}
+        return usuario;
+    }
 
 }
