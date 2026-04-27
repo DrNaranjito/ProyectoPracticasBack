@@ -1,41 +1,37 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ServiciosVerificacion } from "./verificacion.service";
-import { crearVerificacionDTO } from "./dto/aceptarUsuario";
-import { ActualizarVerificacionDto } from "./dto/rechazarUsuario";
+import { Roles } from "../auth/Decorator/roles.decorator";
+import { AuthGuard } from "../auth/guard/auth.guard";
+import { Role } from "../auth/Decorator/role.enum";
+import { aceptarVerificacionDTO } from "./dto/aceptarUsuario";
+import { rechazarVerificacionDTO } from "./dto/rechazarUsuario";
+
 
 @ApiTags('Verificacion') // Con esta linea estamos declarando que en nuestro Swagger se va a ver la documentación relacionada con los usuarios como "Users"
 @Controller('Verificacion')
 export class ControladoresVerificacion {
   constructor(private readonly vericicacionServicios: ServiciosVerificacion) { }
 
-  @Post()
-  crear(@Body() datosDTO: crearVerificacionDTO) {
-    return this.vericicacionServicios.crear(datosDTO);
+  @Get('pending')
+  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  getPending() {
+    return this.vericicacionServicios.getPendingUsers();
   }
 
-  @Get()
-  todos() {
-    return this.vericicacionServicios.todos();
+  @Post('accept')
+  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  accept(@Body() dto: aceptarVerificacionDTO) {
+    return this.vericicacionServicios.acceptUser(dto.targetEmail);
   }
 
-  @Get(':id')
-  buscarUno(@Param('id', ParseIntPipe) id: number) {
-    return this.vericicacionServicios.buscarUno(id);
+  @Post('reject')
+  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  reject(@Body() dto: rechazarVerificacionDTO) {
+    return this.vericicacionServicios.rejectUser(dto.targetEmail);
   }
-
-  @Patch(':id')
-  actualizar(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() datosDTO: ActualizarVerificacionDto
-  ) {
-    return this.vericicacionServicios.update(id, datosDTO);
-  }
-
-  @Delete(':id')
-  eliminar(@Param('id', ParseIntPipe) id: number) {
-    return this.vericicacionServicios.remove(id);
-  }
-
 }
 

@@ -18,6 +18,9 @@ export class Verificacion {
     @Column({ type: 'timestamptz', nullable: true })
     acceptedAt!: Date | null;
 
+    @Column({ type: 'timestamptz', nullable: true })
+    rejectedAt!: Date | null;
+
     @CreateDateColumn({ type: 'timestamptz' })
     createdAt!: Date;
 

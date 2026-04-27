@@ -1,48 +1,61 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Verificacion } from './verificacion.entidad';
-import { ActualizarVerificacionDto } from './dto/rechazarUsuario';
-import { crearVerificacionDTO } from './dto/aceptarUsuario';
+import { Usuarios } from '../usuarios/usuarios.entidad';
 
 
 
 @Injectable()
 export class ServiciosVerificacion {
   constructor(
+
+    @InjectRepository(Usuarios)
+    private readonly repositorioUsuaruis: Repository<Usuarios>,
     @InjectRepository(Verificacion)
     private readonly repositorioVerificacion: Repository<Verificacion>,
   ) { }
 
-  crear(datosDTO: crearVerificacionDTO) {
-    const verificacion = this.repositorioVerificacion.create(datosDTO);
-    return this.repositorioVerificacion.save(verificacion);
+  async getPendingUsers() {
+    return this.repositorioUsuaruis.find({
+      where: { role: 'sinValidar' },
+      relations: ['verification'],
+    });
   }
 
-  todos() {
-    return this.repositorioVerificacion.find(); //Es la misma sentencia en postgre solo que pasada a tsSELECT * FROM usuarios;
+ async acceptUser(mail: string) {
+    const user = await this.repositorioUsuaruis.findOne({
+      where: { mail },
+      relations: ['verification'],
+    });
+
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    if (user.role !== 'sinValidar')
+      throw new BadRequestException('El usuario ya está validado');
+
+    user.role = 'validado';
+    user.verificar.acceptedAt = new Date();
+
+    await this.repositorioVerificacion.save(user.verificar);
+    return this.repositorioUsuaruis.save(user);
   }
 
-  async buscarUno(id: number) {
-    const verificacion = await this.repositorioVerificacion.findOne({ where: { id } })
-    if (!verificacion) {
-      throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
-    }
-    return verificacion
-  }
 
-  async update(id: number, dto: ActualizarVerificacionDto) {
-    const user = await this.buscarUno(id);
+    async rejectUser(mail: string) {
+    const user = await this.repositorioUsuaruis.findOne({
+      where: { mail },
+      relations: ['verification'],
+    });
 
-    const updated = Object.assign(user, dto);
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    if (user.role !== 'sinValidar')
+      throw new BadRequestException('El usuario ya está validado');
 
-    return this.repositorioVerificacion.save(updated);
+    user.verificar.rejectedAt = new Date();
+    await this.repositorioVerificacion.save(user.verificar);
 
+    await this.repositorioUsuaruis.remove(user);
 
-  }
-
-  async remove(id: number) {
-    const user = await this.buscarUno(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
-    return this.repositorioVerificacion.remove(user);
+    return { message: 'Usuaruio eliminado.' };
   }
 }

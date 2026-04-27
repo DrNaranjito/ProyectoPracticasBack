@@ -1,9 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsOptional, IsString } from "class-validator";
+import { IsDate, IsEmail, IsOptional, IsString } from "class-validator";
 
-export class ActualizarVerificacionDto {
+export class rechazarVerificacionDTO {
   @ApiProperty()
-  @IsOptional()
+  @IsString()
   @IsEmail()
-  targetEmail?: string;
+  targetEmail!: string;
+
+  @ApiProperty()
+  @IsDate()
+  rejectedAt!: Date;
 }
