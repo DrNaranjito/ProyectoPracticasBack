@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Verificacion } from './verificacion.entidad';
-import { ActualizarVerificacionDto } from './dto/actualizarVerificacion.dto';
-import { crearVerificacionDTO } from './dto/crearVerificacion.dto';
+import { ActualizarVerificacionDto } from './dto/rechazarUsuario';
+import { crearVerificacionDTO } from './dto/aceptarUsuario';
 
 
 

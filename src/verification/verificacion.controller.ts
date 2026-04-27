@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ServiciosVerificacion } from "./verificacion.service";
-import { crearVerificacionDTO } from "./dto/crearVerificacion.dto";
-import { ActualizarVerificacionDto } from "./dto/actualizarVerificacion.dto";
+import { crearVerificacionDTO } from "./dto/aceptarUsuario";
+import { ActualizarVerificacionDto } from "./dto/rechazarUsuario";
 
 @ApiTags('Verificacion') // Con esta linea estamos declarando que en nuestro Swagger se va a ver la documentación relacionada con los usuarios como "Users"
 @Controller('Verificacion')
