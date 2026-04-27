@@ -1,40 +1,49 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { ServiciosVerificacion } from "./verificacion.service";
-import { Roles } from "../auth/Decorator/roles.decorator";
-import { AuthGuard } from "../auth/guard/auth.guard";
-import { Role } from "../auth/Decorator/role.enum";
-import { aceptarVerificacionDTO } from "./dto/aceptarUsuario";
-import { rechazarVerificacionDTO } from "./dto/rechazarUsuario";
+import { 
+  Body, Controller, Get, Post, UseGuards 
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ServiciosVerificacion } from './verificacion.service';
+import { Roles } from '../auth/Decorator/roles.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { Role } from '../auth/Decorator/role.enum';
+import { aceptarVerificacionDTO } from './dto/aceptarUsuario';
+import { rechazarVerificacionDTO } from './dto/rechazarUsuario';
 
-
-@ApiTags('Verificacion') // Con esta linea estamos declarando que en nuestro Swagger se va a ver la documentación relacionada con los usuarios como "Users"
-@Controller('Verificacion')
+@ApiTags('Verificación / Admin')
+@Controller('verificacion')
 export class ControladoresVerificacion {
-  constructor(private readonly vericicacionServicios: ServiciosVerificacion) { }
+  constructor(private readonly verificacionServicios: ServiciosVerificacion) {}
 
+
+  @ApiTags('Verificación / Admin')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
   @Get('pending')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  @Roles(Role.Admin)
+  @ApiOperation({ summary: 'Obtener usuarios pendientes de verificación (solo admin)' })
   getPending() {
-    return this.vericicacionServicios.getPendingUsers();
+    return this.verificacionServicios.getPendingUsers();
   }
 
+
+  @ApiTags('Verificación / Admin')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
   @Post('accept')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  @Roles(Role.Admin)
+  @ApiOperation({ summary: 'Aceptar un usuario pendiente (solo admin)' })
   accept(@Body() dto: aceptarVerificacionDTO) {
-    return this.vericicacionServicios.acceptUser(dto.targetEmail);
+    return this.verificacionServicios.acceptUser(dto.targetEmail);
   }
 
-  @Post('reject')
+
+  @ApiTags('Verificación / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Roles(Role.Admin)
+  @Post('reject')
+  @ApiOperation({ summary: 'Rechazar un usuario pendiente (solo admin)' })
   reject(@Body() dto: rechazarVerificacionDTO) {
-    return this.vericicacionServicios.rejectUser(dto.targetEmail);
+    return this.verificacionServicios.rejectUser(dto.targetEmail);
   }
 }
-

@@ -14,9 +14,16 @@ export class CatsService {
 
   ) { }
 
-  create(datosDTO: CreateCatDto) {
-    const gato = this.catRepository.create(datosDTO);
-    return this.catRepository.save(gato);
+  async create(datosDTO: CreateCatDto) {
+    const cat = this.catRepository.create({
+      externalId: datosDTO.externalId,
+      url: datosDTO.url,
+      width: datosDTO.width,
+      height: datosDTO.height,
+      breed: { id: datosDTO.breedId }, // ← IMPORTANTE
+    });
+
+    await this.catRepository.save(cat);
   }
 
 
@@ -28,9 +35,9 @@ export class CatsService {
     return gato
   }
 
-  async getAllCats() {
+  getAllCats() {
     return this.catRepository.find({
-      relations: ['breed', 'pet'],
+      relations: ['breed', 'pet', 'pet.user'],
     });
   }
 

@@ -15,7 +15,7 @@ export class ServiciosPet {
 
     @InjectRepository(Cat)
     private readonly repositorioCat: Repository<Cat>,
-  ) {}
+  ) { }
   /*Inyectamos lo necesario para poder usar las herramientas que nos
   van a permitir guardar, borrar y modificar los usuarios de la base de datos.
   */
@@ -38,7 +38,12 @@ export class ServiciosPet {
       //Se crea applicandole el nombre que le pone el usuario y usando el id del gato y del usuario
     });
 
-    return this.repositorioCat.save(pet);
+    const guardado = await this.repositorioPet.save(pet);
+
+    return this.repositorioPet.findOne({
+      where: { id: guardado.id },
+      relations: ['user', 'cat'],
+    });
   }
 
 
