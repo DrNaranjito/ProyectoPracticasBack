@@ -30,6 +30,6 @@ export class Verificacion {
     @DeleteDateColumn({ type: 'timestamptz' })
     deletedAt!: Date;
 
-    @ManyToOne(() => Usuarios, (user) => user.verificar)
+    @ManyToOne(() => Usuarios, (user) => user.verificacion)
     user!: Usuarios;
 }

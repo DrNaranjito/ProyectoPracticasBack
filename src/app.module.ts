@@ -7,6 +7,8 @@ import { CatsModule } from './cats/cats.module';
 import { BreedModule } from './breed/breed.module';
 import { PetModule } from './pet/pet.module';
 import { AuthModule } from './auth/auth.module';
+import { SeedService } from './seed/seed.service';
+import { Usuarios } from './usuarios/usuarios.entidad';
 import { VerificacionModule } from './verification/verificacion.module';
 
 @Module({
@@ -15,6 +17,8 @@ import { VerificacionModule } from './verification/verificacion.module';
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
+
+    TypeOrmModule.forFeature([Usuarios]),// Implementamos El TypeOrm para la creación del administrador usando la entidad de usuario.
 
     // Conexión a base de datos
     TypeOrmModule.forRoot({
@@ -27,6 +31,7 @@ import { VerificacionModule } from './verification/verificacion.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+
 
     //Implementación de los modulos para la aplicación.
     UsuariosModule,
@@ -43,5 +48,7 @@ import { VerificacionModule } from './verification/verificacion.module';
 
 
   ],
+
+  providers: [SeedService]
 })
 export class AppModule { }

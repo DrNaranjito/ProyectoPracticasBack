@@ -53,5 +53,5 @@ export class Usuarios {
     //En estas 3 ultimas filas he usado el tipo *timestamptz* ya que proporciona la fecha con zona horaria.
 
     @OneToOne(() => Verificacion, (verificacion) => verificacion.user)
-    verificar!: Verificacion;
+    verificacion!: Verificacion;
 }

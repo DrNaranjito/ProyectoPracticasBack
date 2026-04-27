@@ -19,14 +19,14 @@ export class ServiciosVerificacion {
   async getPendingUsers() {
     return this.repositorioUsuarios.find({
       where: { role: 'sinValidar' },
-      relations: ['verification'],
+      relations: ['verificacion'],
     });
   }
 
  async acceptUser(mail: string) {
     const user = await this.repositorioUsuarios.findOne({
       where: { mail },
-      relations: ['verification'],
+      relations: ['verificacion'],
     });
 
     if (!user) throw new NotFoundException('Usuario no encontrado');
@@ -34,9 +34,9 @@ export class ServiciosVerificacion {
       throw new BadRequestException('El usuario ya está validado');
 
     user.role = 'validado';
-    user.verificar.acceptedAt = new Date();
+    user.verificacion.acceptedAt = new Date();
 
-    await this.repositorioVerificacion.save(user.verificar);
+    await this.repositorioVerificacion.save(user.verificacion);
     return this.repositorioUsuarios.save(user);
   }
 
@@ -44,15 +44,15 @@ export class ServiciosVerificacion {
     async rejectUser(mail: string) {
     const user = await this.repositorioUsuarios.findOne({
       where: { mail },
-      relations: ['verification'],
+      relations: ['verificacion'],
     });
 
     if (!user) throw new NotFoundException('Usuario no encontrado');
     if (user.role !== 'sinValidar')
       throw new BadRequestException('El usuario ya está validado');
 
-    user.verificar.rejectedAt = new Date();
-    await this.repositorioVerificacion.save(user.verificar);
+    user.verificacion.rejectedAt = new Date();
+    await this.repositorioVerificacion.save(user.verificacion);
 
     await this.repositorioUsuarios.remove(user);
 

@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { loginDto } from './dto/login.dto';
 import { Repository } from 'typeorm';
 import { Verificacion } from '../verification/verificacion.entidad';
+import { InjectRepository } from '@nestjs/typeorm';
 
 
 
@@ -18,8 +19,10 @@ export class AuthService {
 
     constructor(
         private readonly ServiciosUsuario: ServiciosUsuario,
-        private readonly jwtService: JwtService, //Implementamos el generador de tokens a la clase AuthServices
-         private readonly verificacionRepository: Repository<Verificacion>
+        private readonly jwtService: JwtService,
+
+        @InjectRepository(Verificacion)
+        private readonly verificacionRepository: Repository<Verificacion>,
     ) { }
 
     async register({ name, email, password }: registerDto) {
@@ -86,4 +89,10 @@ export class AuthService {
         return usuario;
     }
 
+
+    /*
+            const usuarioRegistrado = await this.userRepository.findOne({
+            where: { mail: email } // IMPORTANTE: mail, no email
+        });
+    */
 }
