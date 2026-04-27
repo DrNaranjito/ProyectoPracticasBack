@@ -13,8 +13,8 @@ export class CatsController {
   }
 
   @Get()
-  findAll() {
-    return this.catsService.findAll();
+  getAllCats() {
+    return this.catsService.getAllCats();
   }
 
   @Get(':id')
@@ -30,5 +30,15 @@ export class CatsController {
   @Delete(':id')
   remove(@Param('id') id: number) {
     return this.catsService.remove(id);
+  }
+
+  @Get('id')
+  getCatById(@Param('id') id: number) {
+    return this.catsService.getCatById(id);
+}
+
+  @Get()
+  getAvailableCats() {
+    return this.catsService.getAvailableCats();
   }
 }
