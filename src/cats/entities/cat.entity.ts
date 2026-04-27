@@ -36,8 +36,8 @@ export class Cat {
   @ManyToOne(() => Breed, breed => breed.cats)
   breed!: Breed; // ← RELACIÓN CORRECTA
 
-  @OneToOne(() => Pet, pet => pet.cat)
-  pet!: Pet;
+  @OneToOne(() => Pet, pet => pet.cat, { nullable: true })
+  pet!: Pet | null;
 
   //Función que dice que una raza la puede tener uno o muchos gatos.
 
