@@ -3,10 +3,6 @@ import { AuthService } from './auth.service';
 import { registerDto } from './dto/register.dto';
 import { loginDto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
-import { RolesGuard } from './guard/roles.guard';
-import { Roles } from './Decorator/roles.decorator';
-import { Admin } from 'typeorm';
-import { Role } from './Decorator/role.enum';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 

@@ -3,11 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Verificacion } from './verificacion.entidad';
 import { ControladoresVerificacion } from './verificacion.controller';
 import { ServiciosVerificacion } from './verificacion.service';
+import { Usuarios } from '../usuarios/usuarios.entidad';
 
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Verificacion])], //Se especifica que entidad se va a usar en este módulo.
+  imports: [TypeOrmModule.forFeature([Verificacion, Usuarios])], //Se especifica que entidad se va a usar en este módulo.
   controllers: [ControladoresVerificacion],
   providers: [ServiciosVerificacion],
   exports: [ServiciosVerificacion],

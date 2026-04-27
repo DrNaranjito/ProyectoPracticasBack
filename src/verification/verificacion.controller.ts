@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { ServiciosVerificacion } from "./verificacion.service";
 import { Roles } from "../auth/Decorator/roles.decorator";
 import { AuthGuard } from "../auth/guard/auth.guard";
@@ -14,6 +14,7 @@ export class ControladoresVerificacion {
   constructor(private readonly vericicacionServicios: ServiciosVerificacion) { }
 
   @Get('pending')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Roles(Role.Admin)
   getPending() {
@@ -21,6 +22,7 @@ export class ControladoresVerificacion {
   }
 
   @Post('accept')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Roles(Role.Admin)
   accept(@Body() dto: aceptarVerificacionDTO) {
@@ -28,6 +30,7 @@ export class ControladoresVerificacion {
   }
 
   @Post('reject')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Roles(Role.Admin)
   reject(@Body() dto: rechazarVerificacionDTO) {

@@ -11,20 +11,20 @@ export class ServiciosVerificacion {
   constructor(
 
     @InjectRepository(Usuarios)
-    private readonly repositorioUsuaruis: Repository<Usuarios>,
+    private readonly repositorioUsuarios: Repository<Usuarios>,
     @InjectRepository(Verificacion)
     private readonly repositorioVerificacion: Repository<Verificacion>,
   ) { }
 
   async getPendingUsers() {
-    return this.repositorioUsuaruis.find({
+    return this.repositorioUsuarios.find({
       where: { role: 'sinValidar' },
       relations: ['verification'],
     });
   }
 
  async acceptUser(mail: string) {
-    const user = await this.repositorioUsuaruis.findOne({
+    const user = await this.repositorioUsuarios.findOne({
       where: { mail },
       relations: ['verification'],
     });
@@ -37,12 +37,12 @@ export class ServiciosVerificacion {
     user.verificar.acceptedAt = new Date();
 
     await this.repositorioVerificacion.save(user.verificar);
-    return this.repositorioUsuaruis.save(user);
+    return this.repositorioUsuarios.save(user);
   }
 
 
     async rejectUser(mail: string) {
-    const user = await this.repositorioUsuaruis.findOne({
+    const user = await this.repositorioUsuarios.findOne({
       where: { mail },
       relations: ['verification'],
     });
@@ -54,7 +54,7 @@ export class ServiciosVerificacion {
     user.verificar.rejectedAt = new Date();
     await this.repositorioVerificacion.save(user.verificar);
 
-    await this.repositorioUsuaruis.remove(user);
+    await this.repositorioUsuarios.remove(user);
 
     return { message: 'Usuaruio eliminado.' };
   }
