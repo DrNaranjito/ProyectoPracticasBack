@@ -19,7 +19,7 @@ export class CatsService {
     private readonly breedRepository: Repository<Breed>,
 
     private readonly httpService: HttpService,
-  ) {}
+  ) { }
 
   async create(datosDTO: CreateCatDto) {
     const cat = this.catRepository.create({
@@ -78,26 +78,45 @@ export class CatsService {
   async importCats() {
     // 1. Llamar a la API externa
     const response = await this.httpService.axiosRef.get(
-      'https://api.thecatapi.com/v1/images/search?limit=5&has_breeds=1',
+      'https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&include_breeds=1',
+      {
+        headers: {
+          'x-api-key': process.env.CAT_API_KEY,
+        },
+      },
     );
 
     const cats = response.data;
 
-    for (const apiCat of cats) {
-      const breedName = apiCat.breeds[0]?.name ?? 'Unknown';
 
-      // 2. Buscar si la raza existe
+    for (const apiCat of cats) {
+
+      // Si no tiene razas, lo saltamos
+      if (!apiCat.breeds || apiCat.breeds.length === 0) {
+        console.log('Gato sin raza, saltado');
+        continue;
+      }
+
+
+      const breedData = apiCat.breeds[0];
+      const breedName = breedData.name;
+
+      // 1. Buscar si existe
       let breed = await this.breedRepository.findOne({
-        where: { name: breedName },
+        where: { externalId: breedData.id },
       });
 
-      // 3. Si no existe, crearla
+      // 2. Si no existe, crearla
       if (!breed) {
-        breed = this.breedRepository.create({ name: breedName });
+        breed = this.breedRepository.create({
+          externalId: breedData.id,
+          name: breedName,
+        });
+
         await this.breedRepository.save(breed);
       }
 
-      // 4. Crear el gato
+      // 3. Crear el gato
       const newCat = this.catRepository.create({
         externalId: apiCat.id,
         url: apiCat.url,

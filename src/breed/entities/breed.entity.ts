@@ -14,16 +14,16 @@ export class Breed {
     @Column()
     name!: string
 
-    @Column()
-    temperament!: string
+    @Column({ nullable: true })
+    temperament!: string;
 
-    @Column()
+    @Column({ nullable: true })
     origin!: string
 
-    @Column()
+    @Column({ nullable: true })
     description!: string
 
-    @Column()
+    @Column({ nullable: true })
     wikiUrl!: string
 
     @CreateDateColumn({ type: 'timestamptz' })
