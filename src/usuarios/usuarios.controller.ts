@@ -8,6 +8,8 @@ import { actualizarUsuariosDto } from "./dto/actualizarUsuario.dto";
 import { crearUsuariosDto } from "./dto/crearUsuarios.dto";
 import { ServiciosUsuario } from "./usuarios.services";
 import { AuthGuard } from "../auth/guard/auth.guard";
+import { Roles } from "../auth/Decorator/roles.decorator";
+import { Role } from "../auth/Decorator/role.enum";
 
 @ApiTags('Users')
 @Controller('users')
@@ -15,13 +17,15 @@ export class ControladoresUsuarios {
   constructor(private readonly servicioUsuario: ServiciosUsuario) {}
 
 
+  @Roles( Role.Admin)
   @Post()
-  @ApiOperation({ summary: 'Crear un nuevo usuario' })
+  @ApiOperation({ summary: 'Crear un nuevo usuario (solo admin)' })
   crear(@Body() datosDTO: crearUsuariosDto) {
     return this.servicioUsuario.crear(datosDTO);
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -31,6 +35,7 @@ export class ControladoresUsuarios {
     return this.servicioUsuario.todos();
   }
 
+  @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -41,6 +46,7 @@ export class ControladoresUsuarios {
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -54,6 +60,7 @@ export class ControladoresUsuarios {
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)

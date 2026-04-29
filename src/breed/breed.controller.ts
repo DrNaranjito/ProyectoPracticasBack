@@ -6,12 +6,15 @@ import { CreateBreedDto } from './dto/create-breed.dto';
 import { UpdateBreedDto } from './dto/update-breed.dto';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/guard/auth.guard';
+import { Roles } from '../auth/Decorator/roles.decorator';
+import { Role } from '../auth/Decorator/role.enum';
 
 @Controller('breed')
 export class BreedController {
   constructor(private readonly breedService: BreedService) {}
 
 
+  @Roles(Role.Admin)
   @ApiTags('Breeds / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -22,6 +25,7 @@ export class BreedController {
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Breeds')
   @Get()
   @ApiOperation({ summary: 'Obtener todas las razas' })
@@ -30,6 +34,7 @@ export class BreedController {
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Breeds')
   @Get(':id')
   @ApiOperation({ summary: 'Obtener una raza por ID' })
@@ -38,6 +43,7 @@ export class BreedController {
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Breeds / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -48,6 +54,7 @@ export class BreedController {
   }
 
 
+  @Roles(Role.Admin)
   @ApiTags('Breeds / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
