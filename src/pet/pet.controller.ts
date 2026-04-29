@@ -20,6 +20,7 @@ export class PetController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
+  @ApiBearerAuth()
   @Post()
   @ApiOperation({ summary: 'Adoptar un gato' })
   adoptar(@Body() dto: CreatePetDto, @Req() req) {
@@ -29,6 +30,7 @@ export class PetController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
+  @ApiBearerAuth()
   @Get('my')
   @ApiOperation({ summary: 'Obtener las mascotas del usuario autenticado' })
   getMyPets(@Req() req) {
@@ -38,6 +40,7 @@ export class PetController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
+  @ApiBearerAuth()
   @Delete('devolver/:id')
   @ApiOperation({ summary: 'Devolver (desadoptar) una mascota' })
   devolver(@Param('id') id: number, @Req() req) {
@@ -47,6 +50,7 @@ export class PetController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
+  @ApiBearerAuth()
   @Get(':id')
   @ApiOperation({ summary: 'Buscar una mascota por ID' })
   findOne(@Param('id') id: number) {
@@ -56,6 +60,7 @@ export class PetController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
+  @ApiBearerAuth()
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar datos de una mascota' })
   update(@Param('id') id: number, @Body() updatePetDto: UpdatePetDto) {
@@ -65,6 +70,7 @@ export class PetController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
+  @ApiBearerAuth()
   @Delete('admin/:id')
   @ApiOperation({ summary: 'Eliminar una mascota (solo admin)' })
   remove(@Param('id') id: number) {

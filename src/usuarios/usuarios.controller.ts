@@ -17,8 +17,9 @@ import { RolesGuard } from "../auth/guard/roles.guard";
 export class ControladoresUsuarios {
   constructor(private readonly servicioUsuario: ServiciosUsuario) {}
 
-
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles( Role.Admin)
+  @ApiBearerAuth()
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo usuario (solo admin)' })
   crear(@Body() datosDTO: crearUsuariosDto) {

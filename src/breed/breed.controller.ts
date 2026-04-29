@@ -29,6 +29,7 @@ export class BreedController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
+  @ApiBearerAuth()
   @ApiTags('Breeds')
   @Get()
   @ApiOperation({ summary: 'Obtener todas las razas' })
@@ -39,6 +40,7 @@ export class BreedController {
 
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
+  @ApiBearerAuth()
   @ApiTags('Breeds')
   @Get(':id')
   @ApiOperation({ summary: 'Obtener una raza por ID' })
