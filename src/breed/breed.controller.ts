@@ -8,12 +8,14 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/guard/auth.guard';
 import { Roles } from '../auth/Decorator/roles.decorator';
 import { Role } from '../auth/Decorator/role.enum';
+import { RolesGuard } from '../auth/guard/roles.guard';
 
 @Controller('breed')
 export class BreedController {
   constructor(private readonly breedService: BreedService) {}
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Breeds / Admin')
   @ApiBearerAuth()
@@ -25,6 +27,7 @@ export class BreedController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Breeds')
   @Get()
@@ -34,6 +37,7 @@ export class BreedController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Breeds')
   @Get(':id')
@@ -43,6 +47,7 @@ export class BreedController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Breeds / Admin')
   @ApiBearerAuth()
@@ -54,10 +59,10 @@ export class BreedController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Breeds / Admin')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar una raza (solo admin)' })
   remove(@Param('id') id: number) {

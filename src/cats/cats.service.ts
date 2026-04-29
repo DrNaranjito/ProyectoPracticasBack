@@ -4,15 +4,22 @@ import { UpdateCatDto } from './dto/update-cat.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cat } from './entities/cat.entity';
 import { IsNull, Repository } from 'typeorm';
+import { HttpService } from '@nestjs/axios';
+import { Breed } from '../breed/entities/breed.entity';
+
 
 @Injectable()
 export class CatsService {
 
   constructor(
     @InjectRepository(Cat)
-    private readonly catRepository: Repository<Cat>
+    private readonly catRepository: Repository<Cat>,
 
-  ) { }
+    @InjectRepository(Breed)
+    private readonly breedRepository: Repository<Breed>,
+
+    private readonly httpService: HttpService,
+  ) {}
 
   async create(datosDTO: CreateCatDto) {
     const cat = this.catRepository.create({
@@ -20,19 +27,18 @@ export class CatsService {
       url: datosDTO.url,
       width: datosDTO.width,
       height: datosDTO.height,
-      breed: { id: datosDTO.breedId }, // ← IMPORTANTE
+      breed: { id: datosDTO.breedId },
     });
 
     await this.catRepository.save(cat);
   }
 
-
   async findOne(id: number) {
     const gato = await this.catRepository.findOne({ where: { id } })
     if (!gato) {
-      throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
+      throw new NotFoundException;
     }
-    return gato
+    return gato;
   }
 
   getAllCats() {
@@ -51,7 +57,6 @@ export class CatsService {
     return cat;
   }
 
-
   async getAvailableCats() {
     return this.catRepository.find({
       where: { pet: IsNull() },
@@ -61,18 +66,49 @@ export class CatsService {
 
   async update(id: number, dto: UpdateCatDto) {
     const gato = await this.findOne(id);
-
     const updated = Object.assign(gato, dto);
-
     return this.catRepository.save(updated);
-
-
   }
 
   async remove(id: number) {
-    const gato = await this.findOne(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
+    const gato = await this.findOne(id);
     return this.catRepository.remove(gato);
   }
 
+  async importCats() {
+    // 1. Llamar a la API externa
+    const response = await this.httpService.axiosRef.get(
+      'https://api.thecatapi.com/v1/images/search?limit=5&has_breeds=1',
+    );
 
+    const cats = response.data;
+
+    for (const apiCat of cats) {
+      const breedName = apiCat.breeds[0]?.name ?? 'Unknown';
+
+      // 2. Buscar si la raza existe
+      let breed = await this.breedRepository.findOne({
+        where: { name: breedName },
+      });
+
+      // 3. Si no existe, crearla
+      if (!breed) {
+        breed = this.breedRepository.create({ name: breedName });
+        await this.breedRepository.save(breed);
+      }
+
+      // 4. Crear el gato
+      const newCat = this.catRepository.create({
+        externalId: apiCat.id,
+        url: apiCat.url,
+        width: apiCat.width,
+        height: apiCat.height,
+        breed: breed,
+      });
+
+      await this.catRepository.save(newCat);
+    }
+
+    return { message: 'Gatos importados correctamente' };
+  }
 }

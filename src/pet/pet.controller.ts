@@ -8,6 +8,7 @@ import { AuthGuard } from '../auth/guard/auth.guard';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Roles } from '../auth/Decorator/roles.decorator';
 import { Role } from '../auth/Decorator/role.enum';
+import { RolesGuard } from '../auth/guard/roles.guard';
 
 @ApiTags('Pets / Adopción')
 @ApiBearerAuth()
@@ -17,6 +18,7 @@ export class PetController {
   constructor(private readonly petService: ServiciosPet) {}
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
   @Post()
   @ApiOperation({ summary: 'Adoptar un gato' })
@@ -25,6 +27,7 @@ export class PetController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
   @Get('my')
   @ApiOperation({ summary: 'Obtener las mascotas del usuario autenticado' })
@@ -33,6 +36,7 @@ export class PetController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
   @Delete('devolver/:id')
   @ApiOperation({ summary: 'Devolver (desadoptar) una mascota' })
@@ -41,6 +45,7 @@ export class PetController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
   @Get(':id')
   @ApiOperation({ summary: 'Buscar una mascota por ID' })
@@ -49,6 +54,7 @@ export class PetController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar datos de una mascota' })
@@ -57,6 +63,7 @@ export class PetController {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @Delete('admin/:id')
   @ApiOperation({ summary: 'Eliminar una mascota (solo admin)' })

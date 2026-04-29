@@ -8,6 +8,7 @@ import { AuthGuard } from '../auth/guard/auth.guard';
 import { Role } from '../auth/Decorator/role.enum';
 import { aceptarVerificacionDTO } from './dto/aceptarUsuario';
 import { rechazarVerificacionDTO } from './dto/rechazarUsuario';
+import { RolesGuard } from '../auth/guard/roles.guard';
 
 @ApiTags('Verificación / Admin')
 @Controller('verificacion')
@@ -15,9 +16,9 @@ export class ControladoresVerificacion {
   constructor(private readonly verificacionServicios: ServiciosVerificacion) {}
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiTags('Verificación / Admin')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Roles(Role.Admin)
   @Get('pending')
   @ApiOperation({ summary: 'Obtener usuarios pendientes de verificación (solo admin)' })
@@ -26,6 +27,7 @@ export class ControladoresVerificacion {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiTags('Verificación / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -37,6 +39,7 @@ export class ControladoresVerificacion {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiTags('Verificación / Admin')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)

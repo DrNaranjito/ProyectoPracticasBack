@@ -10,6 +10,7 @@ import { ServiciosUsuario } from "./usuarios.services";
 import { AuthGuard } from "../auth/guard/auth.guard";
 import { Roles } from "../auth/Decorator/roles.decorator";
 import { Role } from "../auth/Decorator/role.enum";
+import { RolesGuard } from "../auth/guard/roles.guard";
 
 @ApiTags('Users')
 @Controller('users')
@@ -25,20 +26,20 @@ export class ControladoresUsuarios {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Get()
   @ApiOperation({ summary: 'Obtener todos los usuarios (solo admin)' })
   findAll() {
     return this.servicioUsuario.todos();
   }
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un usuario por ID (solo admin)' })
   findOne(@Param('id', ParseIntPipe) id: number) {
@@ -46,10 +47,10 @@ export class ControladoresUsuarios {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar un usuario (solo admin)' })
   update(
@@ -60,10 +61,10 @@ export class ControladoresUsuarios {
   }
 
 
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar un usuario (solo admin)' })
   remove(@Param('id', ParseIntPipe) id: number) {

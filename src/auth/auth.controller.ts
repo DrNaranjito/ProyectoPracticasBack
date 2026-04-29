@@ -8,6 +8,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Roles } from './Decorator/roles.decorator';
 import { Role } from './Decorator/role.enum';
+import { RolesGuard } from './guard/roles.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -34,7 +35,7 @@ export class AuthController {
 
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard,RolesGuard)
     @Roles(Role.sinValidar,Role.Validado,Role.Admin)
     @Get('profile')
     @ApiOperation({ summary: 'Obtener el perfil del usuario autenticado' })
