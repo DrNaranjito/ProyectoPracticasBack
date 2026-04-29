@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -44,12 +44,22 @@ export class CatsController {
     return this.catsService.getAvailableCats();
   }
 
+    @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @ApiTags('Importación de gatos / Admin')
+  @ApiOperation({ summary: 'Importar gatos desde la API externa(solo admin)' })
+  @Get('import')
+  importCats() {
+    return this.catsService.importCats();
+  }
+
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Validado, Role.Admin)
   @ApiBearerAuth()
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un gato por ID' })
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id',ParseIntPipe) id: number) {
     return this.catsService.findOne(id);
   }
 
@@ -72,13 +82,4 @@ export class CatsController {
     return this.catsService.remove(id);
   }
 
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles(Role.Admin)
-  @ApiBearerAuth()
-  @ApiTags('Importación de gatos / Admin')
-  @ApiOperation({ summary: 'Importar gatos desde la API externa(solo admin)' })
-  @Get('import')
-  importCats() {
-    return this.catsService.importCats();
-  }
 }
