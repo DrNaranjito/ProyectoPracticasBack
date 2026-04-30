@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany, OneToOne } from "typeorm";
 import { Pet } from "../pet/entities/pet.entity";
 import { Verificacion } from "../verification/verificacion.entidad";
+import { Exclude } from "class-transformer";
+import { Role } from "../auth/Decorator/role.enum";
 
 //ESTE FICHERO ES LA TABLA DEL DIAGRAMA RELACIONAL DE LA BASE DE DATOS.
 
@@ -18,19 +20,16 @@ export class Usuarios {
     name!: string;
 
 
+    @Exclude()
     @Column()
     password!: string;
 
     @Column({
-        type: 'enum', // Marcamos esta columna para que tenga 3 tipos de posibles respuestas 
-        enum: ['validado', 'sinValidar', 'Admin'], //Enumeramos las 3 posibles respuestas
-        default: 'sinValidar' // Y por ultimo asignamos un valor por defecto
-
-        /*Se hace de esta manera ya que si fuese por typescript con ponerlo separado por barrar valdría
-        *Pero para que la base de datos reconozca que solo se pueden esos x valores hay que señalar que es 
-        *de ese tipo*/
+        type: 'enum',
+        enum: Role,
+        default: Role.sinValidar,
     })
-    role!: 'validado' | 'sinValidar' | 'Admin';
+    role!: Role;
 
     @Column({
         type: 'enum',

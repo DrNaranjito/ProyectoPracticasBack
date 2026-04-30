@@ -42,7 +42,7 @@ export class ServiciosPet {
 
     return this.repositorioPet.findOne({
       where: { id: guardado.id },
-      relations: ['user', 'cat'],
+      relations: {user:true,cat:true}
     });
   }
 
