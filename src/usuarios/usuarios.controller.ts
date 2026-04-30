@@ -49,11 +49,11 @@ export class ControladoresUsuarios {
 
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  @Roles(Role.Admin,Role.Validado)
   @ApiTags('Users / Admin')
   @ApiBearerAuth()
   @Patch(':id')
-  @ApiOperation({ summary: 'Actualizar un usuario (solo admin)' })
+  @ApiOperation({ summary: 'Actualizar un usuario' })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() datosDTO: actualizarUsuariosDto

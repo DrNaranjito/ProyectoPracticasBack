@@ -65,19 +65,13 @@ export class ServiciosPet {
     await this.repositorioPet.remove(pet);
   }
 
-
   async buscarUno(id: number) {
     const pet = await this.repositorioPet.findOne({ where: { id } })
     if (!pet) {
-      throw new NotFoundException //Si no se encuentra al usuario lanza una excepcion
+      throw new NotFoundException 
     }
     return pet
   }
-
-  /*
-  Metodo en el cual si se le pasa por parametro un id va a buscar el usuario en cuestion.
-  Si no hay ningun usuario con ese id se lanzará una excepción de que no se ha encontrado.
-  */
 
   async update(id: number, dto: UpdatePetDto) {
     const pet = await this.buscarUno(id);
@@ -87,11 +81,6 @@ export class ServiciosPet {
     return this.repositorioPet.save(updated);
 
   }
-
-  /*
-  Metodo en el cual si se le pasa por parametro un numero de id y los datos actualizados por parametro
-  actualiza el objero con los datos nuevos y los guarda de nuevo en el usuario con el mismo id
-  */
 
   async remove(id: number) {
     const pet = await this.buscarUno(id); //Se le asgina el id del usuario que se quiere borrar a la constante usuario para borrarlo
