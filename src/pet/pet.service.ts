@@ -47,12 +47,19 @@ export class ServiciosPet {
   }
 
 
-  async misMascotas(userId: number) {
-    return this.repositorioPet.find({
-      where: { user: { id: userId } },
-      relations: ['cat'],
-    });
+async misMascotas(userId: number) {
+  const mascotas = await this.repositorioPet.find({
+    where: { user: { id: userId } },
+    relations: ['cat'],
+  });
+
+  if (mascotas.length === 0) {
+    throw new NotFoundException('No tienes ninguna mascota adoptada aún');
   }
+
+  return mascotas;
+}
+
 
   async devolver(petId: number, userId: number) {
     const pet = await this.repositorioPet.findOne({
@@ -63,6 +70,8 @@ export class ServiciosPet {
     if (!pet) throw new NotFoundException('No tienes esta mascota');
 
     await this.repositorioPet.remove(pet);
+
+    return { message: 'El gato se ha devuelto correctamente' };
   }
 
   async buscarUno(id: number) {

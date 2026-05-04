@@ -67,7 +67,7 @@ export class AuthService {
         if (!contraseñaValida) {
             throw new UnauthorizedException('Contraseña invalida')
         }
-        const payload = {  sub: usuarioRegistrado.id, email: usuarioRegistrado.mail, role: usuarioRegistrado.role } //Se le mete el rol para que el token sepa que rol es.
+        const payload = { sub: usuarioRegistrado.id, email: usuarioRegistrado.mail, role: usuarioRegistrado.role } //Se le mete el rol para que el token sepa que rol es.
 
         const token = await this.jwtService.signAsync(payload)
 
@@ -75,7 +75,6 @@ export class AuthService {
             token, email
         };
 
-        //TODO controlar los tokens se mejor manera. Esto tan solo es una prueba de creación de tokens
 
     }
 

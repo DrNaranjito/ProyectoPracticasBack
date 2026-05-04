@@ -2,6 +2,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, OneToOne } from "typeorm";
 import { Breed } from "../../breed/entities/breed.entity";
 import { Pet } from "../../pet/entities/pet.entity";
+import { Exclude } from "class-transformer";
 
 
 @Entity('Cats')
@@ -21,6 +22,10 @@ export class Cat {
 
   @Column()
   height!: number
+
+  @Column({ nullable: true })
+  @Exclude()
+  petId?: number;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;

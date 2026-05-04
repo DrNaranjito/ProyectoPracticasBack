@@ -6,6 +6,7 @@ import { crearUsuariosDto } from './dto/crearUsuarios.dto';
 import { actualizarUsuariosDto } from './dto/actualizarUsuario.dto';
 import { Usuarios } from './usuarios.entidad';
 import { registerDto } from '../auth/dto/register.dto';
+import { Role } from '../auth/Decorator/role.enum';
 
 @Injectable()
 export class ServiciosUsuario {
@@ -67,25 +68,28 @@ export class ServiciosUsuario {
   //----------------------------------------------------------------------------------
 
   //METODOS PARA AUTENTIFICAR
-  crearDesdeAuth(dto: registerDto) {
+async crearDesdeAuth(dto: registerDto): Promise<Usuarios> {
     const usuario = this.repositorioUsuario.create({
-      mail: dto.email,
-      name: dto.name,
-      password: dto.password,
-      role: 'sinValidar',
-      language: 'Español',
+        mail: dto.email,
+        name: dto.name,
+        password: dto.password,
+        role: Role.sinValidar,
+        language: 'Español',
     });
-    /*
-    He creado el metodo crearDesdeAuth ya que al intentar usar el metodo de crear usuarios no me ha dejado
+        /*He creado el metodo crearDesdeAuth ya que al intentar usar el metodo de crear usuarios no me ha dejado
     por que no eran los parametros validos asi que igualo los datos introducidos por el dto y le añado
     los dos parametros que faltan en el dto de auth
     */
-
-    return this.repositorioUsuario.save(usuario);
-  }
+    return await this.repositorioUsuario.save(usuario);
+}
 
   async buscarPorEmail(email: string) {
-    return await this.repositorioUsuario.findOneBy({ mail: email });
+    return this.repositorioUsuario.findOne({
+      where: { mail: email },
+    });
+
+
+
   }
 
   /*

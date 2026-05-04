@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Verificacion } from './verificacion.entidad';
 import { Usuarios } from '../usuarios/usuarios.entidad';
+import { Role } from '../auth/Decorator/role.enum';
 
 
 
@@ -18,7 +19,7 @@ export class ServiciosVerificacion {
 
   async getPendingUsers() {
     return this.repositorioUsuarios.find({
-      where: { role: 'sinValidar' },
+      where: { role: Role.sinValidar },
       relations: ['verificacion'],
     });
   }
@@ -33,7 +34,7 @@ export class ServiciosVerificacion {
     if (user.role !== 'sinValidar')
       throw new BadRequestException('El usuario ya está validado');
 
-    user.role = 'validado';
+    user.role = Role.Validado;
     user.verificacion.acceptedAt = new Date();
 
     await this.repositorioVerificacion.save(user.verificacion);
@@ -52,7 +53,7 @@ export class ServiciosVerificacion {
       throw new BadRequestException('El usuario ya está validado');
 
     user.verificacion.rejectedAt = new Date();
-    await this.repositorioVerificacion.save(user.verificacion);
+    await this.repositorioVerificacion.remove(user.verificacion);
 
     await this.repositorioUsuarios.remove(user);
 

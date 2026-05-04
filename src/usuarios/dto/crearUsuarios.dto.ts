@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
+import { Role } from "../../auth/Decorator/role.enum";
 
 export class crearUsuariosDto {
     @ApiProperty()
@@ -17,7 +18,7 @@ export class crearUsuariosDto {
     @ApiProperty()
     @IsString()
     @IsOptional()
-    role!: 'validado' | 'sinValidar' | 'Admin';
+    role?: Role;
 
     @ApiProperty()
     @IsString()

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -59,7 +59,7 @@ export class CatsService {
 
   async getAvailableCats() {
     return this.catRepository.find({
-      where: { pet: IsNull() },
+      where: { petId: IsNull() },
       relations: ['breed'],
     });
   }
@@ -71,12 +71,24 @@ export class CatsService {
   }
 
   async remove(id: number) {
-    const gato = await this.findOne(id);
-    return this.catRepository.remove(gato);
+    const cat = await this.catRepository.findOne({
+      where: { id },
+      relations: ['pet'],
+    });
+
+    if (!cat) {
+      throw new NotFoundException('El gato no existe');
+    }
+
+    if (cat.pet) {
+      throw new BadRequestException('No puedes borrar un gato que está adoptado');
+    }
+
+    return this.catRepository.remove(cat);
   }
 
+
   async importCats() {
-    // 1. Llamar a la API externa
     const response = await this.httpService.axiosRef.get(
       'https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&include_breeds=1',
       {
@@ -88,29 +100,29 @@ export class CatsService {
 
     const cats = response.data;
 
-
     for (const apiCat of cats) {
 
-      // Si no tiene razas, lo saltamos
       if (!apiCat.breeds || apiCat.breeds.length === 0) {
         console.log('Gato sin raza, saltado');
         continue;
       }
 
-
       const breedData = apiCat.breeds[0];
-      const breedName = breedData.name;
 
       // 1. Buscar si existe
       let breed = await this.breedRepository.findOne({
         where: { externalId: breedData.id },
       });
 
-      // 2. Si no existe, crearla
+      // 2. Crear si no existe
       if (!breed) {
         breed = this.breedRepository.create({
           externalId: breedData.id,
-          name: breedName,
+          name: breedData.name,
+          temperament: breedData.temperament ?? null,
+          origin: breedData.origin ?? null,
+          description: breedData.description ?? null,
+          wikiUrl: breedData.wikipedia_url ?? null,
         });
 
         await this.breedRepository.save(breed);

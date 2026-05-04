@@ -2,10 +2,10 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { CreateCatDto } from './create-cat.dto';
 import { IsNumber } from 'class-validator';
 
-export class UpdateCatDto extends PartialType(CreateCatDto) {
+export class UpdateCatDto{
     @ApiProperty()
     @IsNumber()
-    widht?: number
+    width?: number
     
     @ApiProperty()
     @IsNumber()

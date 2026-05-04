@@ -44,7 +44,7 @@ export class CatsController {
     return this.catsService.getAvailableCats();
   }
 
-    @UseGuards(AuthGuard, RolesGuard)
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @ApiBearerAuth()
   @ApiTags('Importación de gatos / Admin')
