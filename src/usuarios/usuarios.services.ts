@@ -52,8 +52,6 @@ export class ServiciosUsuario {
     const updated = Object.assign(user, dto);
 
     return this.repositorioUsuario.save(updated);
-
-
   }
 
   /*

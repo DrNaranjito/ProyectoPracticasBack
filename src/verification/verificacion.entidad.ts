@@ -30,6 +30,8 @@ export class Verificacion {
     @DeleteDateColumn({ type: 'timestamptz' })
     deletedAt!: Date;
 
-    @ManyToOne(() => Usuarios, (user) => user.verificacion)
+    @ManyToOne(() => Usuarios, user => user.verificacion, {
+        onDelete: 'CASCADE',
+    })
     user!: Usuarios;
 }

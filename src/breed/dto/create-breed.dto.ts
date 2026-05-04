@@ -25,4 +25,10 @@ export class CreateBreedDto {
     @ApiProperty()
     @IsString()
     wikiUrl!: string
+
+    child_friendly!: number;
+    dog_friendly!: number;
+    energy_level!: number;
+    intelligence!: number;
+    stranger_friendly!: number;
 }

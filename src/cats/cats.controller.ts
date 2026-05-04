@@ -25,7 +25,7 @@ export class CatsController {
 
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles(Role.Validado)
+  @Roles(Role.Validado, Role.Admin)
   @ApiBearerAuth()
   @Get()
   @ApiOperation({ summary: 'Obtener todos los gatos' })

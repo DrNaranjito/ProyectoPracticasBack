@@ -35,6 +35,21 @@ export class Breed {
     @DeleteDateColumn({ type: 'timestamptz' })
     deletedAt!: Date;
 
+    @Column({ type: 'int', default: 0 })
+    child_friendly!: number;
+
+    @Column({ type: 'int', default: 0 })
+    dog_friendly!: number;
+
+    @Column({ type: 'int', default: 0 })
+    energy_level!: number;
+
+    @Column({ type: 'int', default: 0 })
+    intelligence!: number;
+
+    @Column({ type: 'int', default: 0 })
+    stranger_friendly!: number;
+
     @OneToMany(() => Cat, (cat) => cat.breed)
     cats!: Cat[];
     //En este caso como es la aprte N de la relación se tiene que guardar como un array

@@ -19,7 +19,9 @@ export class Pet {
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt!: Date;
 
-  @ManyToOne(() => Usuarios, user => user.pets)
+  @ManyToOne(() => Usuarios, user => user.pets, {
+    onDelete: 'CASCADE',
+  })
   user!: Usuarios;
 
   @OneToOne(() => Cat, cat => cat.pet)

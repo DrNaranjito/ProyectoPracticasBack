@@ -38,6 +38,7 @@ export class ServiciosVerificacion {
     user.verificacion.acceptedAt = new Date();
 
     await this.repositorioVerificacion.save(user.verificacion);
+    await this.repositorioVerificacion.remove(user.verificacion);
     return this.repositorioUsuarios.save(user);
   }
 
