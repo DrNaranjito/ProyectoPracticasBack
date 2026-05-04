@@ -25,8 +25,8 @@ import { Verificacion } from '../verification/verificacion.entidad';
       secret: env.JWT_SECRET,
       signOptions: { expiresIn: '1H' },
     }),
-    
-     TypeOrmModule.forFeature([Usuarios, Verificacion])
+
+    TypeOrmModule.forFeature([Usuarios, Verificacion])
     ],
   controllers: [AuthController],
   providers: [AuthService, RolesGuard]

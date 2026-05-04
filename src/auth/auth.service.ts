@@ -15,8 +15,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class AuthService {
 
-
-
     constructor(
         private readonly ServiciosUsuario: ServiciosUsuario,
         private readonly jwtService: JwtService,
@@ -67,7 +65,7 @@ export class AuthService {
         if (!contraseñaValida) {
             throw new UnauthorizedException('Contraseña invalida')
         }
-        const payload = { sub: usuarioRegistrado.id, email: usuarioRegistrado.mail, role: usuarioRegistrado.role } //Se le mete el rol para que el token sepa que rol es.
+        const payload = { sub: usuarioRegistrado.id, email: usuarioRegistrado.mail, role: usuarioRegistrado.role } //Se guarda en la payload la información necesaria para que el token pueda identificar quien es
 
         const token = await this.jwtService.signAsync(payload)
 
@@ -87,11 +85,4 @@ export class AuthService {
 
         return usuario;
     }
-
-
-    /*
-            const usuarioRegistrado = await this.userRepository.findOne({
-            where: { mail: email } // IMPORTANTE: mail, no email
-        });
-    */
 }

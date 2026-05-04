@@ -23,8 +23,8 @@ export class RolesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest();
     //Consigue la información del usuario para ver que rol tiene
 
-    return roles.some((role) => user.roles?.includes(role));
-    //Si tiene el rol que se usa en el controlador que se está intentando entrar el metodo devuleve true, sino devulve false
+    return roles.includes(user.role);
+    //Con esto se está comparando un string de token
   }
 
 }
